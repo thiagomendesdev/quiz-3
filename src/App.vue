@@ -61,31 +61,18 @@ onMounted(() => {
   @apply bg-white;
 }
 
-/* Ajusta o espaçamento da toolbar */
+/* Ajusta o layout da toolbar */
 .ql-toolbar.ql-snow {
-  @apply flex gap-2;
+  @apply flex flex-nowrap;
 }
 
 .ql-toolbar.ql-snow .ql-formats {
-  @apply flex gap-2;
+  @apply flex flex-nowrap gap-0.5;
+  margin-right: 0 !important;
 }
 
 .ql-toolbar.ql-snow button,
 .ql-toolbar.ql-snow .ql-picker {
   @apply mr-0;
-}
-
-/* Remove indentation from first level lists */
-.ql-editor ul > li,
-.ql-editor ol > li {
-  padding-left: 0 !important;
-}
-
-/* Keep indentation for nested lists */
-.ql-editor ul > li > ul > li,
-.ql-editor ol > li > ol > li,
-.ql-editor ul > li > ol > li,
-.ql-editor ol > li > ul > li {
-  padding-left: 1.5em !important;
 }
 </style> 
