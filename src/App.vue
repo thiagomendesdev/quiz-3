@@ -19,7 +19,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import Quill from 'quill'
-import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
 const editor1 = ref(null)
 const editor2 = ref(null)
@@ -39,7 +39,7 @@ onMounted(() => {
       toolbar: toolbarOptions,
       formula: true
     },
-    theme: 'snow',
+    theme: 'bubble',
     placeholder: 'Digite seu texto aqui...'
   }
 
@@ -61,18 +61,5 @@ onMounted(() => {
   @apply bg-white;
 }
 
-/* Ajusta o layout da toolbar */
-.ql-toolbar.ql-snow {
-  @apply flex flex-nowrap;
-}
-
-.ql-toolbar.ql-snow .ql-formats {
-  @apply flex flex-nowrap gap-0.5;
-  margin-right: 0 !important;
-}
-
-.ql-toolbar.ql-snow button,
-.ql-toolbar.ql-snow .ql-picker {
-  @apply mr-0;
-}
+/* Remove snow-specific toolbar styles since bubble theme has a different toolbar structure */
 </style> 
