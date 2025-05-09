@@ -1,6 +1,6 @@
 /* Base styles for Quill Editor */
 .ql-editor {
-  @apply p-0 min-h-0 h-full text-sm;
+  @apply p-0 min-h-0 h-full text-sm text-foreground;
 }
 
 .ql-editor.ql-blank::before {
