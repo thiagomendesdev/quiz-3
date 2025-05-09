@@ -5,6 +5,7 @@
 
 .ql-editor.ql-blank::before {
   @apply text-muted-foreground;
+  font-style: normal !important;
 }
 
 /* Toolbar styles */
