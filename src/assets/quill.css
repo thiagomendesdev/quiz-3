@@ -32,12 +32,6 @@
   @apply bg-background border rounded-md shadow-sm;
 }
 
-/* Single line specific styles */
-.ql-editor.single-line {
-  @apply whitespace-nowrap overflow-x-auto;
-  max-height: 2.5rem;
-}
-
 /* Multi-line specific styles */
 .ql-editor.multi-line {
   @apply min-h-[200px] max-h-[400px] overflow-y-auto p-4;
