@@ -59,8 +59,12 @@ onMounted(() => {
     placeholder: 'Digite seu texto aqui...'
   }
 
-  new Quill(editor1.value, options)
-  new Quill(editor2.value, options)
+  const quill1 = new Quill(editor1.value, options)
+  const quill2 = new Quill(editor2.value, options)
+  
+  // Add multi-line class to editors
+  quill1.root.classList.add('multi-line')
+  quill2.root.classList.add('multi-line')
 })
 </script>
 
