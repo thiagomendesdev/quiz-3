@@ -10,12 +10,12 @@
         <div class="space-y-4">
           <div class="rounded-lg border bg-card p-4 shadow-sm">
             <h2 class="text-lg font-semibold mb-4">Editor 1</h2>
-            <div ref="editor1" class="min-h-[200px] rounded-md border bg-background"></div>
+            <div ref="editor1" class="min-h-[38px] rounded-md border bg-background"></div>
           </div>
 
           <div class="rounded-lg border bg-card p-4 shadow-sm">
             <h2 class="text-lg font-semibold mb-4">Editor 2</h2>
-            <div ref="editor2" class="min-h-[200px] rounded-md border bg-background"></div>
+            <div ref="editor2" class="min-h-[38px] rounded-md border bg-background"></div>
           </div>
 
           <div class="rounded-lg border bg-card p-4 shadow-sm">
@@ -61,10 +61,6 @@ onMounted(() => {
 
   const quill1 = new Quill(editor1.value, options)
   const quill2 = new Quill(editor2.value, options)
-  
-  // Add multi-line class to editors
-  quill1.root.classList.add('multi-line')
-  quill2.root.classList.add('multi-line')
 })
 </script>
 
@@ -74,7 +70,7 @@ onMounted(() => {
 }
 
 .ql-editor {
-  @apply min-h-[200px] max-h-[400px] overflow-y-auto p-4;
+  @apply min-h-[38px] h-auto overflow-y-auto;
 }
 
 .ql-formula {

@@ -1,11 +1,15 @@
 /* Base styles for Quill Editor */
 .ql-editor {
-  @apply p-0 min-h-0 h-full text-sm text-foreground;
+  @apply p-0 min-h-[38px] h-auto text-sm text-foreground;
+  padding: 8px 12px !important;
 }
 
 .ql-editor.ql-blank::before {
   @apply text-muted-foreground;
   font-style: normal !important;
+  padding: 8px 12px !important;
+  left: 12px !important;
+  right: 12px !important;
 }
 
 /* Toolbar styles */
@@ -35,5 +39,6 @@
 
 /* Multi-line specific styles */
 .ql-editor.multi-line {
-  @apply min-h-[200px] max-h-[400px] overflow-y-auto p-4;
+  @apply min-h-[38px] h-auto overflow-y-auto;
+  padding: 8px 12px !important;
 } 
