@@ -71,6 +71,13 @@ onMounted(() => {
 
 .ql-editor {
   @apply min-h-[38px] h-auto overflow-y-auto;
+  padding: 8px 12px !important;
+}
+
+.ql-editor.ql-blank::before {
+  padding: 8px 12px !important;
+  left: 12px !important;
+  right: 12px !important;
 }
 
 .ql-formula {

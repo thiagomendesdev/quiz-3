@@ -2,14 +2,31 @@
 .ql-editor {
   @apply p-0 min-h-[38px] h-auto text-sm text-foreground;
   padding: 8px 12px !important;
+  box-sizing: border-box !important;
 }
 
 .ql-editor.ql-blank::before {
   @apply text-muted-foreground;
   font-style: normal !important;
-  padding: 8px 12px !important;
+  padding: 0 !important;
   left: 12px !important;
   right: 12px !important;
+  top: 8px !important;
+  bottom: 8px !important;
+  position: absolute !important;
+}
+
+/* Override Quill's default styles */
+.ql-container .ql-editor {
+  padding: 8px 12px !important;
+}
+
+.ql-container .ql-editor.ql-blank::before {
+  padding: 0 !important;
+  left: 12px !important;
+  right: 12px !important;
+  top: 8px !important;
+  bottom: 8px !important;
 }
 
 /* Toolbar styles */
