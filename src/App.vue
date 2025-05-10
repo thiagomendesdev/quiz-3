@@ -10,12 +10,12 @@
         <div class="space-y-4">
           <div class="rounded-lg border bg-card p-4 shadow-sm">
             <h2 class="text-lg font-semibold mb-4">Editor 1</h2>
-            <div ref="editor1" class="min-h-[38px] rounded-md border bg-background"></div>
+            <RichTextEditor v-model="content1" />
           </div>
 
           <div class="rounded-lg border bg-card p-4 shadow-sm">
             <h2 class="text-lg font-semibold mb-4">Editor 2</h2>
-            <div ref="editor2" class="min-h-[38px] rounded-md border bg-background"></div>
+            <RichTextEditor v-model="content2" />
           </div>
 
           <div class="rounded-lg border bg-card p-4 shadow-sm">
@@ -33,35 +33,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import Quill from 'quill'
-import 'quill/dist/quill.bubble.css'
+import { ref } from 'vue'
+import RichTextEditor from './components/ui/rich-text-editor.vue'
 
-const editor1 = ref(null)
-const editor2 = ref(null)
-
-onMounted(() => {
-  const toolbarOptions = [
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ 'script': 'sub'}, { 'script': 'super' }],
-    ['formula'],
-    [{ 'color': [] }],
-    [{ 'background': [] }],
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }]
-  ]
-
-  const options = {
-    modules: {
-      toolbar: toolbarOptions,
-      formula: true
-    },
-    theme: 'bubble',
-    placeholder: 'Digite seu texto aqui...'
-  }
-
-  const quill1 = new Quill(editor1.value, options)
-  const quill2 = new Quill(editor2.value, options)
-})
+const content1 = ref('')
+const content2 = ref('')
 </script>
 
 <style>
@@ -75,9 +51,11 @@ onMounted(() => {
 }
 
 .ql-editor.ql-blank::before {
-  padding: 8px 12px !important;
+  padding: 0 !important;
   left: 12px !important;
   right: 12px !important;
+  top: 8px !important;
+  bottom: 8px !important;
 }
 
 .ql-formula {
