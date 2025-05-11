@@ -1,43 +1,9 @@
 <template>
-  <div class="min-h-screen bg-background">
-    <div class="container mx-auto p-6 space-y-8">
-      <header class="space-y-2">
-        <h1 class="text-3xl font-bold tracking-tight">Quill Editor with Math Support</h1>
-        <p class="text-muted-foreground">A modern rich text editor with mathematical formula support</p>
-      </header>
-      
-      <div class="grid gap-8">
-        <div class="space-y-4">
-          <div class="rounded-lg border bg-card p-4 shadow-sm">
-            <h2 class="text-lg font-semibold mb-4">Editor 1</h2>
-            <RichTextEditor v-model="content1" />
-          </div>
-
-          <div class="rounded-lg border bg-card p-4 shadow-sm">
-            <h2 class="text-lg font-semibold mb-4">Editor 2</h2>
-            <RichTextEditor v-model="content2" />
-          </div>
-
-          <div class="rounded-lg border bg-card p-4 shadow-sm">
-            <h2 class="text-lg font-semibold mb-4">Campo de Texto Padrão</h2>
-            <input
-              type="text"
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              placeholder="Digite seu texto aqui..."
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <QuizEditor />
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import RichTextEditor from './components/ui/rich-text-editor.vue'
-
-const content1 = ref('')
-const content2 = ref('')
+import QuizEditor from './components/QuizEditor.vue'
 </script>
 
 <style>
