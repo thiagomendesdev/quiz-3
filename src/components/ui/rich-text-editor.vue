@@ -75,8 +75,37 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
-.ql-tooltip.ql-bubble {
-  z-index: 2147483647 !important;
-  position: fixed !important;
+.rich-text-editor {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.rich-text-editor .ql-toolbar {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.rich-text-editor .ql-container {
+  border: none;
+  font-size: 1rem;
+  min-height: 100px;
+}
+
+.rich-text-editor .ql-editor {
+  padding: 1rem;
+}
+
+.rich-text-editor .ql-editor.ql-blank::before {
+  color: #94a3b8;
+  font-style: normal;
+}
+
+/* Garantir z-index da bubble do Quill */
+.ql-tooltip {
+  z-index: 10000 !important;
 }
 </style> 
