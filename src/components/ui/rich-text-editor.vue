@@ -72,4 +72,11 @@ onBeforeUnmount(() => {
     quill = null
   }
 })
-</script> 
+</script>
+
+<style>
+.ql-tooltip.ql-bubble {
+  z-index: 2147483647 !important;
+  position: fixed !important;
+}
+</style> 

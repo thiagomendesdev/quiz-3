@@ -1,9 +1,9 @@
 <template>
-  <QuizEditor />
+  <qt-multiple />
 </template>
 
 <script setup>
-import QuizEditor from './components/QuizEditor.vue'
+import QtMultiple from './components/qt-multiple.vue'
 </script>
 
 <style>

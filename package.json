@@ -16,6 +16,8 @@
     "lucide-vue-next": "^0.509.0",
     "quill": "^1.3.7",
     "radix-vue": "^1.9.17",
+    "reka-ui": "^2.2.1",
+    "shadcn-vue": "^2.1.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "vue": "^3.3.0",
