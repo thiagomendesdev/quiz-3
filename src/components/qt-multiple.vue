@@ -182,7 +182,7 @@ function setCorrect(qIdx, aIdx) {
   min-height: 100vh;
 }
 .bg-muted {
-  background-color: #FCFCFC;
+  background-color: #FCFCFC !important;
 }
 .floating-toggle-btn {
   position: fixed;

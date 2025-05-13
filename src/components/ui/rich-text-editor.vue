@@ -24,8 +24,7 @@ const props = defineProps({
       ['bold', 'italic', 'underline', 'strike'],
       [{ 'script': 'sub'}, { 'script': 'super' }],
       ['formula'],
-      [{ 'color': [] }],
-      [{ 'background': [] }]
+      [{ 'color': [] }, { 'background': [] }]
     ]
   }
 })
@@ -36,13 +35,39 @@ const editor = ref(null)
 let quill = null
 
 onMounted(() => {
+  // Desabilitar o módulo de listas do Quill
+  const List = Quill.import('formats/list')
+  List.tagName = 'DIV' // Isso fará com que as listas sejam renderizadas como divs normais
+
   const options = {
     modules: {
       toolbar: props.toolbar,
-      formula: true
+      formula: true,
+      keyboard: {
+        bindings: {
+          // Desabilitar todas as formatações automáticas
+          list: {
+            key: ' ',
+            collapsed: true,
+            format: ['list'],
+            handler: function() {
+              return true;
+            }
+          },
+          'list autofill': {
+            key: ' ',
+            collapsed: true,
+            format: ['list'],
+            handler: function() {
+              return true;
+            }
+          }
+        }
+      }
     },
     theme: 'bubble',
-    placeholder: props.placeholder
+    placeholder: props.placeholder,
+    formats: ['bold', 'italic', 'underline', 'strike', 'script', 'color', 'background', 'formula'] // Lista explícita de formatos permitidos
   }
 
   quill = new Quill(editor.value, options)
@@ -54,7 +79,12 @@ onMounted(() => {
 
   // Listen for text changes
   quill.on('text-change', () => {
-    emit('update:modelValue', quill.root.innerHTML)
+    let html = quill.root.innerHTML
+    // Remover qualquer tag de lista que possa ter sido criada
+    html = html.replace(/<ul[^>]*>.*?<\/ul>/gs, '')
+    html = html.replace(/<ol[^>]*>.*?<\/ol>/gs, '')
+    html = html.replace(/<li[^>]*>.*?<\/li>/gs, '')
+    emit('update:modelValue', html)
   })
 })
 
