@@ -1,6 +1,6 @@
 <template>
-  <div class="main-container">
-    <div v-if="mode === MODE_EDICAO" class="p-8 bg-muted min-h-screen" style="background: #FCFCFC;">
+  <div class="main-container" :class="{ 'bg-muted': mode === MODE_EDICAO }">
+    <div v-if="mode === MODE_EDICAO" class="p-8 min-h-screen">
       <draggable
         v-model="questions"
         group="questions"
@@ -52,16 +52,6 @@
                       >
                         <GripVertical :size="16" />
                       </button>
-                      <label class="flex items-center cursor-pointer">
-                        <input
-                          type="radio"
-                          class="shadcn-radio"
-                          :checked="question.correct === aIdx"
-                          @change="setCorrect(qIdx, aIdx)"
-                          :name="'question-' + qIdx"
-                        />
-                        <span class="ml-2 sr-only">Alternativa {{ aIdx + 1 }}</span>
-                      </label>
                       <div class="flex-1">
                         <rich-text-editor
                           v-model="alt.text"
@@ -106,13 +96,13 @@
       </div>
     </div>
     <div v-else class="print-container">
-      <div v-for="(question, qIdx) in questions" :key="question.id" class="print-question mb-8">
+      <div v-for="(question, qIdx) in questions" :key="question.id" class="print-question mb-6">
         <div class="print-question-title">
           <span class="print-question-number">{{ qIdx + 1 }}</span>
           <span v-html="question.text" class="print-question-text" />
         </div>
-        <div class="print-alternatives mt-4">
-          <div v-for="(alt, aIdx) in question.alternatives" :key="alt.id" class="print-alternative flex items-center mb-2">
+        <div class="print-alternatives mt-2">
+          <div v-for="(alt, aIdx) in question.alternatives" :key="alt.id" class="print-alternative flex items-center mb-1">
             <span class="print-radio"></span>
             <span v-html="alt.text" class="print-alternative-text ml-3" />
           </div>
@@ -120,11 +110,11 @@
       </div>
     </div>
     <button
-      class="floating-toggle-btn"
+      class="floating-toggle-btn primary"
       @click="toggleMode"
       type="button"
     >
-      <component :is="mode === MODE_EDICAO ? Printer : Edit" :size="32" />
+      <component :is="mode === MODE_EDICAO ? Printer : Edit" :size="24" />
     </button>
   </div>
 </template>
@@ -185,22 +175,31 @@ function setCorrect(qIdx, aIdx) {
   position: relative;
   min-height: 100vh;
 }
+.bg-muted {
+  background-color: #FCFCFC;
+}
 .floating-toggle-btn {
   position: fixed;
-  right: 2.5rem;
-  bottom: 2.5rem;
+  right: 2rem;
+  bottom: 2rem;
   z-index: 50;
-  background: #fff;
   border-radius: 50%;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
   border: none;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: box-shadow 0.2s;
+}
+.floating-toggle-btn.primary {
+  background: #111;
+  color: #fff;
+}
+.floating-toggle-btn.primary :deep(svg) {
+  color: #fff;
 }
 .floating-toggle-btn:hover {
   box-shadow: 0 4px 16px rgba(0,0,0,0.16);
@@ -215,25 +214,25 @@ function setCorrect(qIdx, aIdx) {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 600;
 }
 .print-question-number {
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 600;
   margin-right: 0.5rem;
 }
 .print-alternatives {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 .print-alternative {
-  font-size: 1.15rem;
-  min-height: 2.2rem;
+  font-size: 1rem;
+  min-height: 1.7rem;
 }
 .print-radio {
   display: inline-block;
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.05rem;
+  height: 1.05rem;
   border: 2px solid #bbb;
   border-radius: 50%;
   background: #fff;
@@ -259,11 +258,8 @@ function setCorrect(qIdx, aIdx) {
     padding: 0.5cm 1.5cm;
   }
   .print-question-title, .print-question-number, .print-alternative {
-    font-size: 1.1rem !important;
+    font-size: 0.95rem !important;
   }
-}
-.bg-muted {
-  background-color: #FCFCFC;
 }
 .bg-card {
   background-color: #fff;
@@ -301,33 +297,6 @@ function setCorrect(qIdx, aIdx) {
 }
 .shadow-sm {
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
-}
-
-/* Radio shadcn visual */
-.shadcn-radio {
-  appearance: none;
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 9999px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  transition: border-color 0.2s;
-  display: inline-block;
-  position: relative;
-}
-.shadcn-radio:checked {
-  border-color: #222;
-}
-.shadcn-radio:checked::after {
-  content: '';
-  display: block;
-  width: 0.75rem;
-  height: 0.75rem;
-  background: #222;
-  border-radius: 9999px;
-  position: absolute;
-  top: 3px;
-  left: 3px;
 }
 
 /* Ícones de drag/excluir das alternativas só no hover */
