@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container" :class="{ 'bg-muted': mode === MODE_EDICAO }">
+  <div class="main-container" :class="{ 'bg-secondary': mode === MODE_EDICAO }">
     <div v-if="mode === MODE_EDICAO" class="p-8 min-h-screen">
       <draggable
         v-model="questions"
@@ -126,7 +126,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import draggable from 'vuedraggable'
 import RichTextEditor from './ui/rich-text-editor.vue'
 import { Trash, GripVertical, X, Plus, Printer, Edit } from 'lucide-vue-next'
@@ -138,7 +138,16 @@ const mode = ref(MODE_EDICAO)
 
 function toggleMode() {
   mode.value = mode.value === MODE_EDICAO ? MODE_IMPRESSAO : MODE_EDICAO
+  document.body.className = mode.value === MODE_EDICAO ? 'bg-secondary' : ''
 }
+
+onMounted(() => {
+  document.body.className = mode.value === MODE_EDICAO ? 'bg-secondary' : ''
+})
+
+onBeforeUnmount(() => {
+  document.body.className = ''
+})
 
 function newAlternative() {
   return { id: Date.now() + Math.random(), text: '' }
@@ -181,8 +190,8 @@ function setCorrect(qIdx, aIdx) {
   position: relative;
   min-height: 100vh;
 }
-.bg-muted {
-  background-color: #FCFCFC !important;
+.bg-secondary {
+  background-color: hsl(var(--secondary)) !important;
 }
 .floating-toggle-btn {
   position: fixed;
