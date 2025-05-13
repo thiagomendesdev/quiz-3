@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[38px] rounded-md border bg-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
+  <div class="min-h-[38px] rounded-md border-1px bg-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
     <div ref="editor" class="min-h-[38px]"></div>
   </div>
 </template>

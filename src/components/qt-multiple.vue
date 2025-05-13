@@ -79,14 +79,14 @@
                 </template>
               </draggable>
               <div class="flex justify-center mt-4">
-                <button
-                  class="btn btn-ghost"
-                  style="min-width: 120px;"
+                <ButtonWithIcon
+                  variant="ghost"
+                  :icon="Plus"
                   @click="addAlternative(qIdx)"
                   type="button"
                 >
-                  + Adicionar alternativa
-                </button>
+                  Adicionar alternativa
+                </ButtonWithIcon>
               </div>
             </div>
           </div>
@@ -94,13 +94,14 @@
       </template>
     </draggable>
     <div class="flex justify-center mt-8">
-      <button
-        class="btn btn-secondary px-6 py-3 rounded-md text-muted-foreground hover:text-primary transition text-base font-medium shadow-sm"
+      <ButtonWithIcon
+        variant="ghost"
+        :icon="Plus"
         @click="addQuestion"
         type="button"
       >
-        + Adicionar questão
-      </button>
+        Adicionar questão
+      </ButtonWithIcon>
     </div>
   </div>
 </template>
@@ -109,7 +110,8 @@
 import { ref } from 'vue'
 import draggable from 'vuedraggable'
 import RichTextEditor from './ui/rich-text-editor.vue'
-import { Trash, GripVertical, X } from 'lucide-vue-next'
+import { Trash, GripVertical, X, Plus } from 'lucide-vue-next'
+import ButtonWithIcon from './ui/button-with-icon.vue'
 
 function newAlternative() {
   return { id: Date.now() + Math.random(), text: '' }
@@ -160,6 +162,7 @@ function setCorrect(qIdx, aIdx) {
 }
 .border-input {
   border-color: #e5e7eb;
+  border-width: 1px;
 }
 .border-primary {
   border-color: #222;
