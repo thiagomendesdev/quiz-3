@@ -215,6 +215,7 @@ function setCorrect(qIdx, aIdx) {
   align-items: flex-start;
   gap: 1rem;
   font-size: 1.15rem;
+  line-height: 1.4rem;
   font-weight: 600;
 }
 .print-question-number {
@@ -223,7 +224,7 @@ function setCorrect(qIdx, aIdx) {
   margin-right: 0.5rem;
 }
 .print-alternatives {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 .print-alternative {
   font-size: 1rem;
@@ -231,9 +232,9 @@ function setCorrect(qIdx, aIdx) {
 }
 .print-radio {
   display: inline-block;
-  width: 1.05rem;
-  height: 1.05rem;
-  border: 2px solid #bbb;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1.5px solid #000000;
   border-radius: 50%;
   background: #fff;
   margin-right: 0.5rem;
@@ -241,6 +242,7 @@ function setCorrect(qIdx, aIdx) {
 .print-alternative-text {
   display: inline-block;
   vertical-align: middle;
+  line-height: 1.3rem;
 }
 @media print {
   body, html, .main-container, .print-container {
