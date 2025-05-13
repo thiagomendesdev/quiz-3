@@ -25,8 +25,7 @@ const props = defineProps({
       [{ 'script': 'sub'}, { 'script': 'super' }],
       ['formula'],
       [{ 'color': [] }],
-      [{ 'background': [] }],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }]
+      [{ 'background': [] }]
     ]
   }
 })

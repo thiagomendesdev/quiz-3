@@ -96,15 +96,21 @@
       </div>
     </div>
     <div v-else class="print-container">
-      <div v-for="(question, qIdx) in questions" :key="question.id" class="print-question mb-6">
-        <div class="print-question-title">
-          <span class="print-question-number">{{ qIdx + 1 }}</span>
-          <span v-html="question.text" class="print-question-text" />
+      <div v-for="(question, qIdx) in questions" :key="question.id" class="flex items-start gap-4 mb-6">
+        <div class="flex flex-col items-center gap-1 mt-6">
+          <span class="text-xl font-regular text-foreground select-none">{{ qIdx + 1 }}</span>
         </div>
-        <div class="print-alternatives mt-2">
-          <div v-for="(alt, aIdx) in question.alternatives" :key="alt.id" class="print-alternative flex items-center mb-1">
-            <span class="print-radio"></span>
-            <span v-html="alt.text" class="print-alternative-text ml-3" />
+        <div class="flex-1">
+          <div class="rounded-lg border bg-card p-4 shadow-sm">
+            <div class="print-question-title">
+              <span v-html="question.text" class="print-question-text" />
+            </div>
+            <div class="print-alternatives mt-2">
+              <div v-for="(alt, aIdx) in question.alternatives" :key="alt.id" class="print-alternative flex items-center mb-1">
+                <span class="print-radio"></span>
+                <span v-html="alt.text" class="print-alternative-text ml-3" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -210,6 +216,12 @@ function setCorrect(qIdx, aIdx) {
   max-width: 800px;
   margin: 0 auto;
 }
+.print-question {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
 .print-question-title {
   display: flex;
   align-items: flex-start;
@@ -245,22 +257,30 @@ function setCorrect(qIdx, aIdx) {
   line-height: 1.3rem;
 }
 @media print {
-  body, html, .main-container, .print-container {
-    background: #fff !important;
-    box-shadow: none !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
+  @page {
+    background: #fff;
+    margin: 0;
   }
-  .floating-toggle-btn {
-    display: none !important;
+  body {
+    background-color: #fff !important;
+  }
+  html {
+    background-color: #fff !important;
+  }
+  .main-container {
+    background-color: #fff !important;
   }
   .print-container {
-    padding: 0.5cm 1.5cm;
+    padding: 2rem;
+    background-color: #fff !important;
   }
   .print-question-title, .print-question-number, .print-alternative {
-    font-size: 0.95rem !important;
+    color: #000 !important;
+  }
+  /* Garantir que os estilos inline sejam preservados */
+  .print-question-text *,
+  .print-alternative-text * {
+    all: revert;
   }
 }
 .bg-card {
