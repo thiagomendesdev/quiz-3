@@ -31,6 +31,12 @@
             <div class="flex-1">
               <div class="rounded-lg border bg-card p-4 shadow-sm">
                 <div class="mb-4">
+                  <ImageUploadPreview
+                    v-model="question.image"
+                    :max-width="true"
+                    :max-height="300"
+                    class="mb-2"
+                  />
                   <rich-text-editor
                     v-model="question.text"
                     placeholder="Digite aqui a questão"
@@ -53,6 +59,12 @@
                         <GripVertical :size="16" />
                       </button>
                       <div class="flex-1">
+                        <ImageUploadPreview
+                          v-model="alt.image"
+                          :max-width="150"
+                          :max-height="150"
+                          class="mb-2"
+                        />
                         <rich-text-editor
                           v-model="alt.text"
                           :placeholder="`Alternativa ${aIdx + 1}`"
@@ -131,6 +143,7 @@ import draggable from 'vuedraggable'
 import RichTextEditor from './ui/rich-text-editor.vue'
 import { Trash, GripVertical, X, Plus, Printer, Edit } from 'lucide-vue-next'
 import ButtonWithIcon from './ui/button-with-icon.vue'
+import ImageUploadPreview from './ui/image-upload-preview.vue'
 
 const MODE_EDICAO = 'edicao'
 const MODE_IMPRESSAO = 'impressao'
@@ -150,12 +163,13 @@ onBeforeUnmount(() => {
 })
 
 function newAlternative() {
-  return { id: Date.now() + Math.random(), text: '' }
+  return { id: Date.now() + Math.random(), text: '', image: '' }
 }
 function newQuestion() {
   return {
     id: Date.now() + Math.random(),
     text: '',
+    image: '',
     alternatives: [newAlternative(), newAlternative(), newAlternative()],
     correct: 0
   }
