@@ -10,18 +10,30 @@ console.log('Frontend ImageKit config:', {
 const imagekit = new ImageKit({
   publicKey: import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY,
   urlEndpoint: import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT,
-  authenticationEndpoint: `${window.location.origin}/api/imagekit-auth`
+  authenticationEndpoint: `${import.meta.env.VITE_API_URL}/api/imagekit-auth`
 });
 
 export async function uploadToImageKit(file) {
   return new Promise((resolve, reject) => {
-    console.log('Starting upload to ImageKit...');
+    console.log('Starting upload to ImageKit...', {
+      fileName: file.name,
+      fileSize: file.size,
+      fileType: file.type
+    });
     
     // Verificar se o arquivo é válido
     if (!file || !(file instanceof File)) {
+      console.error('Invalid file provided:', file);
       reject(new Error('Invalid file provided'));
       return;
     }
+
+    // Verificar se as configurações do ImageKit estão corretas
+    console.log('ImageKit configuration:', {
+      publicKey: imagekit.publicKey,
+      urlEndpoint: imagekit.urlEndpoint,
+      authenticationEndpoint: imagekit.authenticationEndpoint
+    });
 
     imagekit.upload({
       file,

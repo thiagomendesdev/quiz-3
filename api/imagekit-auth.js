@@ -20,6 +20,12 @@ const imagekit = new ImageKit({
 });
 
 module.exports = function handler(req, res) {
+  console.log('Received request:', {
+    method: req.method,
+    url: req.url,
+    headers: req.headers
+  });
+
   // Configurar CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
@@ -27,15 +33,18 @@ module.exports = function handler(req, res) {
 
   // Responder a requisições OPTIONS
   if (req.method === 'OPTIONS') {
+    console.log('Handling OPTIONS request');
     res.status(200).end();
     return;
   }
 
   try {
+    console.log('Generating authentication parameters');
     const auth = imagekit.getAuthenticationParameters();
+    console.log('Generated auth parameters:', auth);
     res.status(200).json(auth);
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error generating auth parameters:', error);
     res.status(500).json({ error: error.message });
   }
 } 
