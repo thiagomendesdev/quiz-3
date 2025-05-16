@@ -24,48 +24,54 @@ if (!config.publicKey || !config.urlEndpoint || !config.apiUrl) {
   throw new Error('Missing required environment variables');
 }
 
-const imagekit = new ImageKit({
-  publicKey: config.publicKey,
-  urlEndpoint: config.urlEndpoint,
-  authenticationEndpoint: `${config.apiUrl}/api/imagekit-auth`
-});
-
 export async function uploadToImageKit(file) {
-  return new Promise((resolve, reject) => {
-    console.log('Starting upload to ImageKit...', {
+  try {
+    console.log('Starting upload process...', {
       fileName: file.name,
       fileSize: file.size,
       fileType: file.type
     });
-    
-    // Verificar se o arquivo é válido
-    if (!file || !(file instanceof File)) {
-      console.error('Invalid file provided:', file);
-      reject(new Error('Invalid file provided'));
-      return;
+
+    // 1. Primeiro, obter o token de autenticação
+    console.log('Fetching authentication token...');
+    const authResponse = await fetch(`${config.apiUrl}/api/imagekit-auth`);
+    if (!authResponse.ok) {
+      throw new Error(`Failed to get auth token: ${authResponse.statusText}`);
+    }
+    const authData = await authResponse.json();
+    console.log('Received auth data:', authData);
+
+    // 2. Preparar o FormData para o upload
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('fileName', file.name);
+    formData.append('useUniqueFileName', 'true');
+    formData.append('token', authData.token);
+    formData.append('signature', authData.signature);
+    formData.append('expire', authData.expire);
+    formData.append('apiKey', config.publicKey);
+
+    // 3. Fazer o upload para o ImageKit
+    console.log('Uploading to ImageKit...');
+    const uploadResponse = await fetch(`${config.urlEndpoint}/v1/files/upload`, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!uploadResponse.ok) {
+      const errorData = await uploadResponse.json();
+      console.error('Upload failed:', errorData);
+      throw new Error(`Upload failed: ${errorData.message || uploadResponse.statusText}`);
     }
 
-    // Verificar se as configurações do ImageKit estão corretas
-    console.log('ImageKit configuration:', {
-      publicKey: imagekit.publicKey,
-      urlEndpoint: imagekit.urlEndpoint,
-      authenticationEndpoint: imagekit.authenticationEndpoint
-    });
+    const result = await uploadResponse.json();
+    console.log('Upload successful:', result);
+    return result.url;
 
-    imagekit.upload({
-      file,
-      fileName: file.name,
-      useUniqueFileName: true
-    }, (err, result) => {
-      if (err) {
-        console.error('ImageKit upload error:', err);
-        reject(err);
-        return;
-      }
-      console.log('Upload successful:', result);
-      resolve(result.url);
-    });
-  });
+  } catch (error) {
+    console.error('Error in upload process:', error);
+    throw error;
+  }
 }
 
 // ATENÇÃO: Crie um arquivo .env.local na raiz do projeto com:
