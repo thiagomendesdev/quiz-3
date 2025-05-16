@@ -11,6 +11,13 @@ export default defineConfig({
   },
   assetsInclude: ['**/*.woff2'],
   build: {
-    assetsInlineLimit: 0
+    outDir: 'dist',
+    assetsDir: 'assets',
+    assetsInlineLimit: 0,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   }
 }) 
