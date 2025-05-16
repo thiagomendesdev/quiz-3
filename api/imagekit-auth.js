@@ -1,4 +1,4 @@
-import ImageKit from 'imagekit';
+const ImageKit = require('imagekit');
 
 // Log das variáveis de ambiente (sem mostrar a private key)
 console.log('Environment variables:', {
@@ -13,7 +13,7 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
 });
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Configurar CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
