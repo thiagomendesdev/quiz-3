@@ -1,4 +1,4 @@
-import ImageKit from 'imagekit-javascript'
+import { supabase } from './supabase'
 
 // Log detalhado das variáveis de ambiente do frontend
 const config = {
@@ -32,26 +32,29 @@ export async function uploadToImageKit(file) {
       fileType: file.type
     });
 
-    // Preparar o FormData para o upload
-    const formData = new FormData();
-    formData.append('file', file);
+    // Gerar um nome único para o arquivo
+    const fileExt = file.name.split('.').pop()
+    const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`
+    const filePath = `${fileName}`
 
-    // Fazer o upload através do nosso backend
-    console.log('Uploading file...');
-    const uploadResponse = await fetch(`${config.apiUrl}/api/imagekit-upload`, {
-      method: 'POST',
-      body: formData
-    });
+    // Fazer upload para o Supabase Storage
+    console.log('Uploading to Supabase Storage...');
+    const { data, error } = await supabase.storage
+      .from('images') // nome do bucket no Supabase
+      .upload(filePath, file)
 
-    if (!uploadResponse.ok) {
-      const errorData = await uploadResponse.json();
-      console.error('Upload failed:', errorData);
-      throw new Error(`Upload failed: ${errorData.message || uploadResponse.statusText}`);
+    if (error) {
+      console.error('Upload failed:', error);
+      throw new Error(`Upload failed: ${error.message}`);
     }
 
-    const result = await uploadResponse.json();
-    console.log('Upload successful:', result);
-    return result.url;
+    // Obter a URL pública do arquivo
+    const { data: { publicUrl } } = supabase.storage
+      .from('images')
+      .getPublicUrl(filePath)
+
+    console.log('Upload successful:', { publicUrl });
+    return publicUrl;
 
   } catch (error) {
     console.error('Error in upload process:', error);
