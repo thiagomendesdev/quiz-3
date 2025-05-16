@@ -1,12 +1,19 @@
 import ImageKit from 'imagekit';
 
+// Log das variáveis de ambiente (sem mostrar a private key)
+console.log('Environment variables:', {
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY ? 'Set' : 'Not set',
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY ? 'Set' : 'Not set',
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
+});
+
 const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
 });
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   // Configurar CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');

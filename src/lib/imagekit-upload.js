@@ -8,10 +8,10 @@ console.log('Frontend ImageKit config:', {
 });
 
 const imagekit = new ImageKit({
-  publicKey: import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY, // Defina no .env.local
-  urlEndpoint: import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT, // Defina no .env.local
-  authenticationEndpoint: import.meta.env.VITE_API_URL + '/api/imagekit-auth' // URL completa da API
-})
+  publicKey: import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY,
+  urlEndpoint: import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT,
+  authenticationEndpoint: `${import.meta.env.VITE_API_URL}/api/imagekit-auth`
+});
 
 export async function uploadToImageKit(file) {
   return new Promise((resolve, reject) => {
@@ -36,7 +36,7 @@ export async function uploadToImageKit(file) {
       console.log('Upload successful:', result);
       resolve(result.url);
     });
-  })
+  });
 }
 
 // ATENÇÃO: Crie um arquivo .env.local na raiz do projeto com:
