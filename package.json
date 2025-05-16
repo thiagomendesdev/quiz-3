@@ -6,12 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node api/server.js"
   },
   "dependencies": {
     "@vueuse/core": "^10.7.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "imagekit-javascript": "^4.0.1",
     "katex": "^0.16.9",
     "lucide-vue-next": "^0.509.0",
