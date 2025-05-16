@@ -10,7 +10,7 @@ console.log('Frontend ImageKit config:', {
 const imagekit = new ImageKit({
   publicKey: import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY,
   urlEndpoint: import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT,
-  authenticationEndpoint: `${import.meta.env.VITE_API_URL}/api/imagekit-auth`
+  authenticationEndpoint: `${window.location.origin}/api/imagekit-auth`
 });
 
 export async function uploadToImageKit(file) {
