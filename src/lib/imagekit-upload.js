@@ -32,28 +32,13 @@ export async function uploadToImageKit(file) {
       fileType: file.type
     });
 
-    // 1. Primeiro, obter o token de autenticação
-    console.log('Fetching authentication token...');
-    const authResponse = await fetch(`${config.apiUrl}/api/imagekit-auth`);
-    if (!authResponse.ok) {
-      throw new Error(`Failed to get auth token: ${authResponse.statusText}`);
-    }
-    const authData = await authResponse.json();
-    console.log('Received auth data:', authData);
-
-    // 2. Preparar o FormData para o upload
+    // Preparar o FormData para o upload
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('fileName', file.name);
-    formData.append('useUniqueFileName', 'true');
-    formData.append('token', authData.token);
-    formData.append('signature', authData.signature);
-    formData.append('expire', authData.expire);
-    formData.append('apiKey', config.publicKey);
 
-    // 3. Fazer o upload para o ImageKit
-    console.log('Uploading to ImageKit...');
-    const uploadResponse = await fetch(`${config.urlEndpoint}/v1/files/upload`, {
+    // Fazer o upload através do nosso backend
+    console.log('Uploading file...');
+    const uploadResponse = await fetch(`${config.apiUrl}/api/imagekit-upload`, {
       method: 'POST',
       body: formData
     });
