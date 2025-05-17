@@ -6,9 +6,9 @@
       type="button"
       @click="triggerFileInput"
       title="Adicionar imagem"
-      :style="buttonStyle"
+      style="width: 40px; height: 40px; min-width: 40px; min-height: 40px;"
     >
-      <UploadIcon :size="buttonIconSize" />
+      <UploadIcon :size="20" />
     </button>
     <input
       ref="fileInput"
@@ -20,7 +20,7 @@
     <div v-if="imageUrl" class="relative flex-shrink-0" :style="imageBoxStyle">
       <img
         :src="imageUrl"
-        :class="[expanded ? 'object-contain' : 'object-cover', 'rounded-md w-full h-full']"
+        :class="['rounded-md w-full h-full', expanded ? 'object-contain' : 'object-cover']"
         :style="imgStyle"
         @click="toggleExpand"
         alt="Imagem da questão ou alternativa"
@@ -67,20 +67,10 @@ const containerStyle = computed(() => {
   return isAlt.value ? '' : 'width: 100%;'
 })
 
-const buttonStyle = computed(() => {
-  // Botão pequeno para alternativas, grande para questão
-  if (isAlt.value) {
-    return 'width: 40px; height: 40px;'
-  }
-  return 'width: 100%; height: 48px;'
-})
-
-const buttonIconSize = computed(() => (isAlt.value ? 20 : 24))
-
 const imageBoxStyle = computed(() => {
   // Imagem 150x150 para alternativa, full para questão
   if (isAlt.value) {
-    return 'width: 150px; height: 150px;'
+    return 'width: 150px; height: 150px; min-width: 150px; min-height: 150px;'
   }
   let style = ''
   if (props.maxWidth === true) style += 'width: 100%;'
@@ -89,10 +79,10 @@ const imageBoxStyle = computed(() => {
 })
 
 const imgStyle = computed(() => {
-  if (expanded.value) return 'max-width:100%; max-height:none; width:100%; height:auto;'
   let style = ''
+  // Sempre limitar o tamanho máximo, mesmo expandida
   if (isAlt.value) {
-    style += 'width: 100%; height: 100%;'
+    style += 'max-width: 150px; max-height: 150px; width: 100%; height: 100%;'
   } else {
     if (props.maxHeight && typeof props.maxHeight === 'number') style += `max-height:${props.maxHeight}px;`
     if (props.maxWidth === true) style += 'width: 100%;'
