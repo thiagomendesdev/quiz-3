@@ -1,39 +1,37 @@
 <template>
-  <div class="relative flex flex-col items-start">
-    <div class="flex items-center gap-2 w-full">
-      <button
-        class="icon-btn"
-        type="button"
-        @click="triggerFileInput"
-        v-if="!imageUrl"
-        title="Adicionar imagem"
-      >
-        <UploadIcon :size="18" />
-      </button>
-      <input
-        ref="fileInput"
-        type="file"
-        accept="image/*"
-        class="hidden"
-        @change="onFileChange"
+  <div class="relative flex items-center gap-2">
+    <button
+      class="icon-btn flex-shrink-0"
+      type="button"
+      @click="triggerFileInput"
+      v-if="!imageUrl"
+      title="Adicionar imagem"
+    >
+      <UploadIcon :size="18" />
+    </button>
+    <input
+      ref="fileInput"
+      type="file"
+      accept="image/*"
+      class="hidden"
+      @change="onFileChange"
+    />
+    <div v-if="imageUrl" class="relative flex-shrink-0" :style="containerStyle">
+      <img
+        :src="imageUrl"
+        :class="[expanded ? 'object-contain' : 'object-cover', 'rounded-md']"
+        :style="imgStyle"
+        @click="toggleExpand"
+        alt="Imagem da questão ou alternativa"
       />
-      <div v-if="imageUrl" class="relative flex-1" :style="containerStyle">
-        <img
-          :src="imageUrl"
-          :class="[expanded ? 'object-contain' : 'object-cover', 'rounded-md w-full h-full']"
-          :style="imgStyle"
-          @click="toggleExpand"
-          alt="Imagem da questão ou alternativa"
-        />
-        <div class="absolute top-2 right-2 flex gap-2 z-10">
-          <button @click.stop="toggleExpand" class="icon-btn" type="button">
-            <ExpandIcon v-if="!expanded" :size="20" />
-            <ShrinkIcon v-else :size="20" />
-          </button>
-          <button @click.stop="removeImage" class="icon-btn" type="button">
-            <TrashIcon :size="20" />
-          </button>
-        </div>
+      <div class="absolute top-2 right-2 flex gap-2 z-10">
+        <button @click.stop="toggleExpand" class="icon-btn" type="button">
+          <ExpandIcon v-if="!expanded" :size="20" />
+          <ShrinkIcon v-else :size="20" />
+        </button>
+        <button @click.stop="removeImage" class="icon-btn" type="button">
+          <TrashIcon :size="20" />
+        </button>
       </div>
     </div>
   </div>
@@ -57,18 +55,32 @@ const expanded = ref(false)
 const imageUrl = computed(() => props.modelValue)
 
 const containerStyle = computed(() => {
-  let style = ''
-  if (props.maxWidth && typeof props.maxWidth === 'number') style += `max-width:${props.maxWidth}px;`
-  if (props.maxHeight && typeof props.maxHeight === 'number') style += `max-height:${props.maxHeight}px;`
-  if (props.maxWidth === true) style += 'width:100%;'
+  let style = 'display: flex; align-items: center; justify-content: center;'
+  if (props.maxWidth && typeof props.maxWidth === 'number') {
+    style += `width: ${props.maxWidth}px;`
+  }
+  if (props.maxHeight && typeof props.maxHeight === 'number') {
+    style += `height: ${props.maxHeight}px;`
+  }
+  if (props.maxWidth === true) {
+    style += 'width: 100%;'
+  }
   return style
 })
 
 const imgStyle = computed(() => {
-  if (expanded.value) return 'max-width:100%; max-height:none;'
   let style = ''
-  if (props.maxHeight && typeof props.maxHeight === 'number') style += `max-height:${props.maxHeight}px;`
-  if (props.maxWidth && typeof props.maxWidth === 'number') style += `max-width:${props.maxWidth}px;`
+  if (props.maxWidth && typeof props.maxWidth === 'number') {
+    style += `max-width: ${props.maxWidth}px;`
+  }
+  if (props.maxHeight && typeof props.maxHeight === 'number') {
+    style += `max-height: ${props.maxHeight}px;`
+  }
+  if (expanded.value) {
+    style += 'width: auto; height: auto;'
+  } else {
+    style += 'width: 100%; height: 100%;'
+  }
   return style
 })
 
@@ -97,7 +109,7 @@ function removeImage() {
   @apply bg-white/80 hover:bg-accent text-muted-foreground rounded-full p-1.5 shadow border border-input transition-colors;
 }
 img {
-  transition: max-height 0.2s, max-width 0.2s;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
 </style> 
