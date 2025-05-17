@@ -105,14 +105,14 @@
                   </template>
                 </draggable>
                 <div class="flex justify-center mt-4">
-                  <ButtonWithIcon
+                  <Button
                     variant="ghost"
-                    :icon="Plus"
                     @click="addAlternative(qIdx)"
                     type="button"
                   >
+                    <Plus class="mr-2 h-4 w-4" />
                     Adicionar alternativa
-                  </ButtonWithIcon>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -120,14 +120,14 @@
         </template>
       </draggable>
       <div class="flex justify-center mt-8">
-        <ButtonWithIcon
+        <Button
           variant="ghost"
-          :icon="Plus"
           @click="addQuestion"
           type="button"
         >
+          <Plus class="mr-2 h-4 w-4" />
           Adicionar questão
-        </ButtonWithIcon>
+        </Button>
       </div>
     </div>
     <div v-else class="print-container">
@@ -169,7 +169,7 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import draggable from 'vuedraggable'
 import RichTextEditor from './ui/rich-text-editor.vue'
 import { Trash, GripVertical, X, Plus, Printer, Edit } from 'lucide-vue-next'
-import ButtonWithIcon from './ui/button-with-icon.vue'
+import { Button } from './ui/button'
 import ImageUploadPreview from './ui/image-upload-preview.vue'
 
 const MODE_EDICAO = 'edicao'
