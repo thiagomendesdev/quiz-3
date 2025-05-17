@@ -31,16 +31,17 @@
             <div class="flex-1">
               <div class="rounded-lg border bg-card p-4 shadow-sm">
                 <div class="mb-4">
-                  <ImageUploadPreview
-                    v-model="question.image"
-                    :max-width="true"
-                    :max-height="300"
-                    class="mb-2"
-                  />
-                  <rich-text-editor
-                    v-model="question.text"
-                    placeholder="Digite aqui a questão"
-                  />
+                  <div class="flex items-center gap-2">
+                    <ImageUploadPreview
+                      v-model="question.image"
+                      :max-width="true"
+                      :max-height="300"
+                    />
+                    <rich-text-editor
+                      v-model="question.text"
+                      placeholder="Digite aqui a questão"
+                    />
+                  </div>
                 </div>
                 <draggable
                   v-model="question.alternatives"
@@ -59,16 +60,17 @@
                         <GripVertical :size="16" />
                       </button>
                       <div class="flex-1">
-                        <ImageUploadPreview
-                          v-model="alt.image"
-                          :max-width="150"
-                          :max-height="150"
-                          class="mb-2"
-                        />
-                        <rich-text-editor
-                          v-model="alt.text"
-                          :placeholder="`Alternativa ${aIdx + 1}`"
-                        />
+                        <div class="flex items-center gap-2">
+                          <ImageUploadPreview
+                            v-model="alt.image"
+                            :max-width="150"
+                            :max-height="150"
+                          />
+                          <rich-text-editor
+                            v-model="alt.text"
+                            :placeholder="`Alternativa ${aIdx + 1}`"
+                          />
+                        </div>
                       </div>
                       <button
                         class="alt-remove flex items-center justify-center h-8 w-8 rounded-md border border-none bg-transparent hover:bg-accent text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity text-sm ml-1"
