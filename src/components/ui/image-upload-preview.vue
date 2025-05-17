@@ -6,9 +6,9 @@
       type="button"
       @click="triggerFileInput"
       title="Adicionar imagem"
-      style="width: 40px; height: 40px; min-width: 40px; min-height: 40px;"
+      style="width: 32px; height: 32px; min-width: 32px; min-height: 32px;"
     >
-      <ImagePlusIcon :size="20" />
+      <ImagePlusIcon :size="16" />
     </button>
     <input
       ref="fileInput"
