@@ -2,12 +2,14 @@
   <div :class="containerClass" :style="containerStyle">
     <button
       v-if="!imageUrl"
-      class="h-10 w-10 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
+      class="h-10 w-10 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
       type="button"
       @click="triggerFileInput"
       title="Adicionar imagem"
+      :disabled="isLoading"
     >
-      <ImagePlusIcon :size="16" />
+      <LoaderIcon v-if="isLoading" :size="16" class="animate-spin" />
+      <ImagePlusIcon v-else :size="16" />
     </button>
     <input
       ref="fileInput"
@@ -15,6 +17,7 @@
       accept="image/*"
       class="hidden"
       @change="onFileChange"
+      :disabled="isLoading"
     />
     <div v-if="imageUrl" class="relative flex-shrink-0" :style="imageBoxStyle">
       <img
@@ -39,7 +42,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { ImagePlus as ImagePlusIcon, Maximize2 as ExpandIcon, Minimize2 as ShrinkIcon, Trash as TrashIcon } from 'lucide-vue-next'
+import { ImagePlus as ImagePlusIcon, Maximize2 as ExpandIcon, Minimize2 as ShrinkIcon, Trash as TrashIcon, Loader2 as LoaderIcon } from 'lucide-vue-next'
 import { uploadToImageKit } from '@/lib/imagekit-upload'
 
 const props = defineProps({
@@ -51,6 +54,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'update:displayMode'])
 
 const fileInput = ref(null)
+const isLoading = ref(false)
 // expanded = true => contain, false => cover
 const expanded = ref(false)
 
@@ -103,8 +107,13 @@ function triggerFileInput() {
 async function onFileChange(e) {
   const file = e.target.files[0]
   if (!file) return
-  const url = await uploadToImageKit(file)
-  emit('update:modelValue', url)
+  isLoading.value = true
+  try {
+    const url = await uploadToImageKit(file)
+    emit('update:modelValue', url)
+  } finally {
+    isLoading.value = false
+  }
 }
 
 function toggleExpand() {
