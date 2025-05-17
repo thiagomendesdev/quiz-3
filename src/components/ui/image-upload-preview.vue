@@ -58,17 +58,16 @@ const imageUrl = computed(() => props.modelValue)
 const isAlt = computed(() => props.maxWidth === 150 && props.maxHeight === 150)
 
 const containerClass = computed(() => {
-  // Para alternativas, layout inline; para questão, layout block
-  return isAlt.value ? 'flex items-center' : 'flex flex-col items-center w-full'
+  if (isAlt.value) return 'flex items-center';
+  if (imageUrl.value) return 'flex flex-col items-center w-full';
+  return '';
 })
 
 const containerStyle = computed(() => {
-  // Não reservar espaço extra para alternativas
-  return isAlt.value ? '' : 'width: 100%;'
+  return isAlt.value ? '' : (imageUrl.value ? 'width: 100%;' : '');
 })
 
 const imageBoxStyle = computed(() => {
-  // Imagem 150x150 para alternativa, full para questão
   if (isAlt.value) {
     return 'width: 150px; height: 150px; min-width: 150px; min-height: 150px;'
   }
@@ -80,7 +79,6 @@ const imageBoxStyle = computed(() => {
 
 const imgStyle = computed(() => {
   let style = ''
-  // Sempre limitar o tamanho máximo, mesmo expandida
   if (isAlt.value) {
     style += 'max-width: 150px; max-height: 150px; width: 100%; height: 100%;'
   } else {
