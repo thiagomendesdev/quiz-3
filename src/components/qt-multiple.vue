@@ -13,14 +13,14 @@
             <div class="flex flex-col items-center gap-1 mt-6">
               <span class="text-xl font-regular text-foreground select-none">{{ qIdx + 1 }}</span>
               <button
-                class="question-drag flex items-center justify-center h-8 w-8 rounded-md border border-none bg-transparent hover:bg-accent text-muted-foreground transition text-sm"
+                class="question-drag h-10 w-10 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
                 title="Arraste para reordenar"
                 type="button"
               >
                 <GripVertical :size="16" />
               </button>
               <button
-                class="flex items-center justify-center h-8 w-8 rounded-md border border-none bg-transparent hover:bg-accent text-muted-foreground transition text-sm"
+                class="h-10 w-10 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
                 @click="removeQuestion(qIdx)"
                 title="Remover questão"
                 type="button"
@@ -70,7 +70,7 @@
                   <template #item="{ element: alt, index: aIdx }">
                     <div class="flex items-center gap-1 group">
                       <button
-                        class="alt-drag flex items-center justify-center h-8 w-8 rounded-md border border-none bg-transparent hover:bg-accent text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity text-sm"
+                        class="alt-drag h-10 w-10 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         title="Arraste para reordenar"
                         type="button"
                       >
@@ -94,7 +94,7 @@
                         </div>
                       </div>
                       <button
-                        class="alt-remove flex items-center justify-center h-8 w-8 rounded-md border border-none bg-transparent hover:bg-accent text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity text-sm ml-1"
+                        class="alt-remove h-10 w-10 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         @click="removeAlternative(qIdx, aIdx)"
                         title="Remover alternativa"
                         type="button"

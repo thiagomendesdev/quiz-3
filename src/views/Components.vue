@@ -4,16 +4,16 @@
     
     <!-- Seção de Botões -->
     <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-4">Botões</h2>
+      <h2 class="text-2xl font-semibold mb-4">Button</h2>
       
       <!-- Botões Apenas com Ícone -->
       <div class="mb-8">
-        <h3 class="text-xl font-medium mb-4">Botões Apenas com Ícone</h3>
+        <h3 class="text-xl font-medium mb-4">Button Icon</h3>
         
         <div class="grid gap-4">
           <!-- Variantes -->
           <div class="p-4 border rounded-lg">
-            <h4 class="font-medium mb-2">Variantes</h4>
+            <h4 class="font-medium mb-2">Button Variants</h4>
             <div class="flex gap-4 flex-wrap">
               <Button 
                 size="icon" 
@@ -74,7 +74,7 @@
 
           <!-- Tamanhos -->
           <div class="p-4 border rounded-lg">
-            <h4 class="font-medium mb-2">Tamanhos</h4>
+            <h4 class="font-medium mb-2">Button Sizes</h4>
             <div class="flex items-center gap-4">
               <Button 
                 size="icon" 
@@ -108,7 +108,7 @@
 
           <!-- Estados -->
           <div class="p-4 border rounded-lg">
-            <h4 class="font-medium mb-2">Estados</h4>
+            <h4 class="font-medium mb-2">Button States</h4>
             <div class="flex gap-4">
               <Button 
                 size="icon" 
@@ -134,7 +134,7 @@
 
           <!-- Diferentes Ícones -->
           <div class="p-4 border rounded-lg">
-            <h4 class="font-medium mb-2">Diferentes Ícones</h4>
+            <h4 class="font-medium mb-2">Button Icons</h4>
             <div class="flex gap-4">
               <Button 
                 size="icon" 
@@ -188,12 +188,12 @@
 
       <!-- Botões com Ícone -->
       <div class="mb-8">
-        <h3 class="text-xl font-medium mb-4">Botões com Ícone</h3>
+        <h3 class="text-xl font-medium mb-4">Button with Icon</h3>
         
         <div class="grid gap-4">
           <!-- Variantes -->
           <div class="p-4 border rounded-lg">
-            <h4 class="font-medium mb-2">Variantes</h4>
+            <h4 class="font-medium mb-2">Button Variants</h4>
             <div class="flex gap-4 flex-wrap">
               <Button 
                 title="Button variant='default'"
@@ -253,7 +253,7 @@
 
           <!-- Tamanhos -->
           <div class="p-4 border rounded-lg">
-            <h4 class="font-medium mb-2">Tamanhos</h4>
+            <h4 class="font-medium mb-2">Button Sizes</h4>
             <div class="flex items-center gap-4">
               <Button 
                 size="sm" 
@@ -287,7 +287,7 @@
 
           <!-- Estados -->
           <div class="p-4 border rounded-lg">
-            <h4 class="font-medium mb-2">Estados</h4>
+            <h4 class="font-medium mb-2">Button States</h4>
             <div class="flex gap-4">
               <Button 
                 disabled 
@@ -313,12 +313,12 @@
 
       <!-- Botões Simples -->
       <div class="mb-8">
-        <h3 class="text-xl font-medium mb-4">Botões Simples</h3>
+        <h3 class="text-xl font-medium mb-4">Button</h3>
         
         <div class="grid gap-4">
           <!-- Variantes -->
           <div class="p-4 border rounded-lg">
-            <h4 class="font-medium mb-2">Variantes</h4>
+            <h4 class="font-medium mb-2">Button Variants</h4>
             <div class="flex gap-4 flex-wrap">
               <Button 
                 title="Button variant='default'"
@@ -360,7 +360,7 @@
 
           <!-- Tamanhos -->
           <div class="p-4 border rounded-lg">
-            <h4 class="font-medium mb-2">Tamanhos</h4>
+            <h4 class="font-medium mb-2">Button Sizes</h4>
             <div class="flex items-center gap-4">
               <Button 
                 size="sm" 
@@ -388,12 +388,12 @@
 
     <!-- Seção de Inputs -->
     <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-4">Inputs</h2>
+      <h2 class="text-2xl font-semibold mb-4">Input</h2>
       
       <div class="grid gap-4">
         <!-- Inputs Básicos -->
         <div class="p-4 border rounded-lg">
-          <h4 class="font-medium mb-2">Inputs Básicos</h4>
+          <h4 class="font-medium mb-2">Input Types</h4>
           <div class="flex flex-col gap-4 max-w-md">
             <div class="grid w-full max-w-sm items-center gap-1.5">
               <Label 
@@ -432,7 +432,7 @@
 
         <!-- Estados -->
         <div class="p-4 border rounded-lg">
-          <h4 class="font-medium mb-2">Estados</h4>
+          <h4 class="font-medium mb-2">Input States</h4>
           <div class="flex flex-col gap-4 max-w-md">
             <div class="grid w-full max-w-sm items-center gap-1.5">
               <Label 
