@@ -2,11 +2,10 @@
   <div :class="containerClass" :style="containerStyle">
     <button
       v-if="!imageUrl"
-      class="icon-btn outline-btn flex-shrink-0 flex items-center justify-center"
+      class="h-10 w-10 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
       type="button"
       @click="triggerFileInput"
       title="Adicionar imagem"
-      style="width: 32px; height: 32px; min-width: 32px; min-height: 32px;"
     >
       <ImagePlusIcon :size="16" />
     </button>
@@ -26,12 +25,12 @@
         alt="Imagem da questão ou alternativa"
       />
       <div class="absolute top-2 right-2 flex gap-2 z-10">
-        <button @click.stop="toggleExpand" class="icon-btn outline-btn" type="button" style="width:32px;height:32px;min-width:32px;min-height:32px;">
-          <ExpandIcon v-if="!isContain" :size="20" />
-          <ShrinkIcon v-else :size="20" />
+        <button @click.stop="toggleExpand" class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center" type="button">
+          <ExpandIcon v-if="!isContain" :size="16" />
+          <ShrinkIcon v-else :size="16" />
         </button>
-        <button @click.stop="removeImage" class="icon-btn outline-btn" type="button" style="width:32px;height:32px;min-width:32px;min-height:32px;">
-          <TrashIcon :size="20" />
+        <button @click.stop="removeImage" class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center" type="button">
+          <TrashIcon :size="16" />
         </button>
       </div>
     </div>
@@ -126,12 +125,6 @@ watch(() => props.displayMode, (val) => {
 </script>
 
 <style scoped>
-.icon-btn {
-  @apply flex items-center justify-center p-0 m-0;
-}
-.outline-btn {
-  @apply border border-input bg-background rounded-md hover:bg-accent hover:text-accent-foreground transition;
-}
 img {
   transition: all 0.2s ease-in-out;
   cursor: pointer;
