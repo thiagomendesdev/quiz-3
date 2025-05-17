@@ -1,13 +1,14 @@
 <template>
-  <div class="relative flex items-center gap-2">
+  <div :class="containerClass" :style="containerStyle">
     <button
+      v-if="!imageUrl"
       class="icon-btn flex-shrink-0"
       type="button"
       @click="triggerFileInput"
-      v-if="!imageUrl"
       title="Adicionar imagem"
+      :style="buttonStyle"
     >
-      <UploadIcon :size="18" />
+      <UploadIcon :size="buttonIconSize" />
     </button>
     <input
       ref="fileInput"
@@ -16,10 +17,10 @@
       class="hidden"
       @change="onFileChange"
     />
-    <div v-if="imageUrl" class="relative flex-shrink-0" :style="containerStyle">
+    <div v-if="imageUrl" class="relative flex-shrink-0" :style="imageBoxStyle">
       <img
         :src="imageUrl"
-        :class="[expanded ? 'object-contain' : 'object-cover', 'rounded-md']"
+        :class="[expanded ? 'object-contain' : 'object-cover', 'rounded-md w-full h-full']"
         :style="imgStyle"
         @click="toggleExpand"
         alt="Imagem da questão ou alternativa"
@@ -54,32 +55,47 @@ const expanded = ref(false)
 
 const imageUrl = computed(() => props.modelValue)
 
+const isAlt = computed(() => props.maxWidth === 150 && props.maxHeight === 150)
+
+const containerClass = computed(() => {
+  // Para alternativas, layout inline; para questão, layout block
+  return isAlt.value ? 'flex items-center' : 'flex flex-col items-center w-full'
+})
+
 const containerStyle = computed(() => {
-  let style = 'display: flex; align-items: center; justify-content: center;'
-  if (props.maxWidth && typeof props.maxWidth === 'number') {
-    style += `width: ${props.maxWidth}px;`
+  // Não reservar espaço extra para alternativas
+  return isAlt.value ? '' : 'width: 100%;'
+})
+
+const buttonStyle = computed(() => {
+  // Botão pequeno para alternativas, grande para questão
+  if (isAlt.value) {
+    return 'width: 40px; height: 40px;'
   }
-  if (props.maxHeight && typeof props.maxHeight === 'number') {
-    style += `height: ${props.maxHeight}px;`
+  return 'width: 100%; height: 48px;'
+})
+
+const buttonIconSize = computed(() => (isAlt.value ? 20 : 24))
+
+const imageBoxStyle = computed(() => {
+  // Imagem 150x150 para alternativa, full para questão
+  if (isAlt.value) {
+    return 'width: 150px; height: 150px;'
   }
-  if (props.maxWidth === true) {
-    style += 'width: 100%;'
-  }
+  let style = ''
+  if (props.maxWidth === true) style += 'width: 100%;'
+  if (props.maxHeight && typeof props.maxHeight === 'number') style += `max-height: ${props.maxHeight}px;`
   return style
 })
 
 const imgStyle = computed(() => {
+  if (expanded.value) return 'max-width:100%; max-height:none; width:100%; height:auto;'
   let style = ''
-  if (props.maxWidth && typeof props.maxWidth === 'number') {
-    style += `max-width: ${props.maxWidth}px;`
-  }
-  if (props.maxHeight && typeof props.maxHeight === 'number') {
-    style += `max-height: ${props.maxHeight}px;`
-  }
-  if (expanded.value) {
-    style += 'width: auto; height: auto;'
-  } else {
+  if (isAlt.value) {
     style += 'width: 100%; height: 100%;'
+  } else {
+    if (props.maxHeight && typeof props.maxHeight === 'number') style += `max-height:${props.maxHeight}px;`
+    if (props.maxWidth === true) style += 'width: 100%;'
   }
   return style
 })
