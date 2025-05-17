@@ -31,20 +31,16 @@
             <div class="flex-1">
               <div class="rounded-lg border bg-card p-4 shadow-sm">
                 <div class="mb-4">
-                  <div class="flex items-center gap-2">
-                    <div class="flex-shrink-0" style="width: 40px;">
-                      <ImageUploadPreview
-                        v-model="question.image"
-                        :max-width="40"
-                        :max-height="40"
-                      />
-                    </div>
-                    <div class="flex-1 min-w-0">
-                      <rich-text-editor
-                        v-model="question.text"
-                        placeholder="Digite aqui a questão"
-                      />
-                    </div>
+                  <div class="flex flex-col gap-2">
+                    <ImageUploadPreview
+                      v-model="question.image"
+                      :max-width="true"
+                      :max-height="300"
+                    />
+                    <rich-text-editor
+                      v-model="question.text"
+                      placeholder="Digite aqui a questão"
+                    />
                   </div>
                 </div>
                 <draggable
@@ -65,11 +61,11 @@
                       </button>
                       <div class="flex-1">
                         <div class="flex items-center gap-2">
-                          <div class="flex-shrink-0" style="width: 40px;">
+                          <div class="flex-shrink-0" style="width: 150px; height: 150px;">
                             <ImageUploadPreview
                               v-model="alt.image"
-                              :max-width="40"
-                              :max-height="40"
+                              :max-width="150"
+                              :max-height="150"
                             />
                           </div>
                           <div class="flex-1 min-w-0">
