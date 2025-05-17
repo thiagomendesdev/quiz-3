@@ -29,7 +29,8 @@ export async function uploadToImageKit(file) {
     console.log('Starting upload process...', {
       fileName: file.name,
       fileSize: file.size,
-      fileType: file.type
+      fileType: file.type,
+      apiUrl: config.apiUrl
     });
 
     // Criar um FormData para enviar o arquivo
@@ -43,11 +44,21 @@ export async function uploadToImageKit(file) {
     });
 
     if (!response.ok) {
-      throw new Error(`Upload failed: ${response.statusText}`);
+      const errorText = await response.text();
+      console.error('Upload failed:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText
+      });
+      throw new Error(`Upload failed: ${response.statusText} - ${errorText}`);
     }
 
     const result = await response.json();
     console.log('Upload successful:', result);
+
+    if (!result.filePath) {
+      throw new Error('Invalid response from server: missing filePath');
+    }
 
     // Retornar a URL completa da imagem
     return `${config.urlEndpoint}/${result.filePath}`;
