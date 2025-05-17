@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import ImageKit from 'imagekit-javascript';
 
 // Log detalhado das variáveis de ambiente do frontend
 const config = {
@@ -24,40 +24,41 @@ if (!config.publicKey || !config.urlEndpoint || !config.apiUrl) {
   throw new Error('Missing required environment variables');
 }
 
+// Inicializar o cliente ImageKit
+const imagekit = new ImageKit({
+  publicKey: config.publicKey,
+  urlEndpoint: config.urlEndpoint
+});
+
 export async function uploadToImageKit(file) {
   try {
     console.log('Starting upload process...', {
       fileName: file.name,
       fileSize: file.size,
-      fileType: file.type,
-      apiUrl: config.apiUrl
+      fileType: file.type
     });
 
-    // Criar um FormData para enviar o arquivo
-    const formData = new FormData();
-    formData.append('file', file);
-
-    // Fazer upload diretamente para o ImageKit através da API
-    const response = await fetch(`${config.apiUrl}/api/imagekit-upload`, {
-      method: 'POST',
-      body: formData
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Upload failed:', {
-        status: response.status,
-        statusText: response.statusText,
-        error: errorText
-      });
-      throw new Error(`Upload failed: ${response.statusText} - ${errorText}`);
+    // Obter as credenciais de autenticação
+    const authResponse = await fetch(`${config.apiUrl}/api/imagekit-auth`);
+    if (!authResponse.ok) {
+      throw new Error('Failed to get authentication parameters');
     }
+    const auth = await authResponse.json();
 
-    const result = await response.json();
+    // Fazer upload diretamente para o ImageKit
+    const result = await imagekit.upload({
+      file: file,
+      fileName: file.name,
+      useUniqueFileName: true,
+      signature: auth.signature,
+      token: auth.token,
+      expire: auth.expire
+    });
+
     console.log('Upload successful:', result);
 
     if (!result.filePath) {
-      throw new Error('Invalid response from server: missing filePath');
+      throw new Error('Invalid response from ImageKit: missing filePath');
     }
 
     // Retornar a URL completa da imagem

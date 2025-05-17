@@ -19,10 +19,6 @@
       "dest": "/api/imagekit-auth.js"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
       "src": "/assets/(.*)",
       "dest": "/dist/assets/$1"
     },
