@@ -2,13 +2,13 @@
   <div :class="containerClass" :style="containerStyle">
     <button
       v-if="!imageUrl"
-      class="icon-btn flex-shrink-0"
+      class="icon-btn outline-btn flex-shrink-0 flex items-center justify-center"
       type="button"
       @click="triggerFileInput"
       title="Adicionar imagem"
       style="width: 40px; height: 40px; min-width: 40px; min-height: 40px;"
     >
-      <UploadIcon :size="20" />
+      <ImagePlusIcon :size="20" />
     </button>
     <input
       ref="fileInput"
@@ -40,7 +40,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { Upload as UploadIcon, Maximize2 as ExpandIcon, Minimize2 as ShrinkIcon, Trash as TrashIcon } from 'lucide-vue-next'
+import { ImagePlus as ImagePlusIcon, Maximize2 as ExpandIcon, Minimize2 as ShrinkIcon, Trash as TrashIcon } from 'lucide-vue-next'
 import { uploadToImageKit } from '@/lib/imagekit-upload'
 
 const props = defineProps({
@@ -112,7 +112,10 @@ function removeImage() {
 
 <style scoped>
 .icon-btn {
-  @apply bg-white/80 hover:bg-accent text-muted-foreground rounded-full p-1.5 shadow border border-input transition-colors;
+  @apply flex items-center justify-center p-0 m-0;
+}
+.outline-btn {
+  @apply border border-input bg-background rounded-md hover:bg-accent hover:text-accent-foreground transition;
 }
 img {
   transition: all 0.2s ease-in-out;

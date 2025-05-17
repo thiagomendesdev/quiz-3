@@ -48,10 +48,12 @@
                       :max-width="40"
                       :max-height="40"
                     />
-                    <rich-text-editor
-                      v-model="question.text"
-                      placeholder="Digite aqui a questão"
-                    />
+                    <div class="flex-1 min-w-0">
+                      <rich-text-editor
+                        v-model="question.text"
+                        placeholder="Digite aqui a questão"
+                      />
+                    </div>
                   </div>
                 </div>
                 <draggable
@@ -129,11 +131,15 @@
         </div>
         <div class="flex-1">
           <div class="rounded-lg border bg-card p-4 shadow-sm">
+            <div v-if="question.image" class="mb-2">
+              <img :src="question.image" style="max-width:100%; max-height:300px; display:block; margin:0 auto; border-radius:8px;" alt="Imagem da questão" />
+            </div>
             <div class="print-question-title">
               <span v-html="question.text" class="print-question-text" />
             </div>
             <div class="print-alternatives mt-2">
               <div v-for="(alt, aIdx) in question.alternatives" :key="alt.id" class="print-alternative flex items-center mb-1">
+                <img v-if="alt.image" :src="alt.image" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 12px;" alt="Imagem alternativa" />
                 <span class="print-radio"></span>
                 <span v-html="alt.text" class="print-alternative-text ml-3" />
               </div>
