@@ -20,17 +20,17 @@
     <div v-if="imageUrl" class="relative flex-shrink-0" :style="imageBoxStyle">
       <img
         :src="imageUrl"
-        :class="['rounded-md w-full h-full', expanded ? 'object-contain' : 'object-cover']"
+        :class="['rounded-md w-full h-full', displayModeClass]"
         :style="imgStyle"
         @click="toggleExpand"
         alt="Imagem da questão ou alternativa"
       />
       <div class="absolute top-2 right-2 flex gap-2 z-10">
-        <button @click.stop="toggleExpand" class="icon-btn" type="button">
-          <ExpandIcon v-if="!expanded" :size="20" />
+        <button @click.stop="toggleExpand" class="icon-btn outline-btn" type="button" style="width:32px;height:32px;min-width:32px;min-height:32px;">
+          <ExpandIcon v-if="!isContain" :size="20" />
           <ShrinkIcon v-else :size="20" />
         </button>
-        <button @click.stop="removeImage" class="icon-btn" type="button">
+        <button @click.stop="removeImage" class="icon-btn outline-btn" type="button" style="width:32px;height:32px;min-width:32px;min-height:32px;">
           <TrashIcon :size="20" />
         </button>
       </div>
@@ -39,18 +39,20 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { ImagePlus as ImagePlusIcon, Maximize2 as ExpandIcon, Minimize2 as ShrinkIcon, Trash as TrashIcon } from 'lucide-vue-next'
 import { uploadToImageKit } from '@/lib/imagekit-upload'
 
 const props = defineProps({
   modelValue: String,
   maxWidth: { type: [Number, Boolean], default: false },
-  maxHeight: { type: [Number, Boolean], default: false }
+  maxHeight: { type: [Number, Boolean], default: false },
+  displayMode: { type: String, default: '' } // 'cover' ou 'contain'
 })
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'update:displayMode'])
 
 const fileInput = ref(null)
+// expanded = true => contain, false => cover
 const expanded = ref(false)
 
 const imageUrl = computed(() => props.modelValue)
@@ -77,6 +79,13 @@ const imageBoxStyle = computed(() => {
   return style
 })
 
+// Determina o modo de exibição (cover/contain)
+const isContain = computed(() => {
+  if (props.displayMode) return props.displayMode === 'contain';
+  return expanded.value;
+})
+const displayModeClass = computed(() => isContain.value ? 'object-contain' : 'object-cover')
+
 const imgStyle = computed(() => {
   let style = ''
   if (isAlt.value) {
@@ -101,11 +110,19 @@ async function onFileChange(e) {
 
 function toggleExpand() {
   expanded.value = !expanded.value
+  emit('update:displayMode', expanded.value ? 'contain' : 'cover')
 }
 
 function removeImage() {
   emit('update:modelValue', '')
+  emit('update:displayMode', 'cover')
 }
+
+// Se displayMode prop mudar, sincroniza o estado local
+watch(() => props.displayMode, (val) => {
+  if (val === 'contain') expanded.value = true
+  else expanded.value = false
+})
 </script>
 
 <style scoped>
