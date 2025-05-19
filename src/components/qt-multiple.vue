@@ -120,15 +120,11 @@
         </template>
       </draggable>
       <div class="flex justify-center mt-8">
-        <div 
-          class="flex flex-col items-center p-4 border rounded-lg bg-card hover:bg-accent cursor-pointer transition-colors"
+        <QuestionTypeCard
+          :icon="ListChecks"
+          label="Múltipla Escolha"
           @click="addQuestion('multiple')"
-        >
-          <div class="w-full h-[100px] bg-muted rounded-md flex items-center justify-center mb-2">
-            <ListChecks class="w-4 h-4 text-muted-foreground" />
-          </div>
-          <span class="text-sm font-medium text-center">Múltipla Escolha</span>
-        </div>
+        />
       </div>
     </div>
     <div v-else class="print-container">
@@ -172,6 +168,7 @@ import RichTextEditor from './ui/rich-text-editor.vue'
 import { Trash, GripVertical, X, Plus, Printer, Edit, ListChecks } from 'lucide-vue-next'
 import { Button } from './ui/button'
 import ImageUploadPreview from './ui/image-upload-preview.vue'
+import QuestionTypeCard from './ui/question-type-card.vue'
 
 const MODE_EDICAO = 'edicao'
 const MODE_IMPRESSAO = 'impressao'
