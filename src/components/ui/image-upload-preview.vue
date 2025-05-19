@@ -25,6 +25,7 @@
         :class="['rounded-md w-full h-full', displayModeClass]"
         :style="imgStyle"
         @click="toggleExpand"
+        @load="onImageLoad"
         alt="Imagem da questão ou alternativa"
       />
       <div class="absolute top-2 right-2 flex gap-2 z-10">
@@ -44,6 +45,7 @@
 import { ref, computed, watch } from 'vue'
 import { ImagePlus as ImagePlusIcon, Maximize2 as ExpandIcon, Minimize2 as ShrinkIcon, Trash as TrashIcon, Loader2 as LoaderIcon } from 'lucide-vue-next'
 import { uploadToImageKit } from '@/lib/imagekit-upload'
+import * as FastAverageColor from 'fast-average-color'
 
 const props = defineProps({
   modelValue: String,
@@ -55,8 +57,8 @@ const emit = defineEmits(['update:modelValue', 'update:displayMode'])
 
 const fileInput = ref(null)
 const isLoading = ref(false)
-// expanded = true => contain, false => cover
 const expanded = ref(false)
+const dominantColor = ref('#f3f3f3')
 
 const imageUrl = computed(() => props.modelValue)
 
@@ -82,11 +84,11 @@ const imageBoxStyle = computed(() => {
   return style
 })
 
-// Determina o modo de exibição (cover/contain)
 const isContain = computed(() => {
   if (props.displayMode) return props.displayMode === 'contain';
   return expanded.value;
 })
+
 const displayModeClass = computed(() => isContain.value ? 'object-contain' : 'object-cover')
 
 const imgStyle = computed(() => {
@@ -99,6 +101,39 @@ const imgStyle = computed(() => {
   }
   return style
 })
+
+async function calculateDominantColor(imgUrl) {
+  if (!imgUrl) return
+  try {
+    // Create a temporary image element to ensure the image is loaded
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    
+    await new Promise((resolve, reject) => {
+      img.onload = resolve
+      img.onerror = reject
+      img.src = imgUrl
+    })
+
+    const fac = new FastAverageColor.FastAverageColor()
+    const color = await fac.getColor(img, {
+      algorithm: 'dominant',
+      mode: 'precision'
+    })
+    console.log('Dominant color calculated:', color)
+    dominantColor.value = color.hex
+  } catch (error) {
+    console.error('Error calculating dominant color:', error)
+    dominantColor.value = '#f3f3f3'
+  }
+}
+
+function onImageLoad(event) {
+  console.log('Image loaded:', imageUrl.value)
+  if (imageUrl.value) {
+    calculateDominantColor(imageUrl.value)
+  }
+}
 
 function triggerFileInput() {
   fileInput.value.click()
@@ -124,9 +159,9 @@ function toggleExpand() {
 function removeImage() {
   emit('update:modelValue', '')
   emit('update:displayMode', 'cover')
+  dominantColor.value = '#f3f3f3'
 }
 
-// Se displayMode prop mudar, sincroniza o estado local
 watch(() => props.displayMode, (val) => {
   if (val === 'contain') expanded.value = true
   else expanded.value = false
@@ -140,6 +175,7 @@ img {
 }
 
 .object-contain {
-  background-color: #f3f3f3;
+  background-color: v-bind(dominantColor);
+  transition: background-color 0.3s ease;
 }
 </style> 
