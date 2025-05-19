@@ -120,14 +120,15 @@
         </template>
       </draggable>
       <div class="flex justify-center mt-8">
-        <Button
-          variant="ghost"
-          @click="addQuestion"
-          type="button"
+        <div 
+          class="flex flex-col items-center p-4 border rounded-lg bg-card hover:bg-accent cursor-pointer transition-colors"
+          @click="addQuestion('multiple')"
         >
-          <Plus class="mr-2 h-4 w-4" />
-          Adicionar questão
-        </Button>
+          <div class="w-full h-[100px] bg-muted rounded-md flex items-center justify-center mb-2">
+            <ListChecks class="w-4 h-4 text-muted-foreground" />
+          </div>
+          <span class="text-sm font-medium text-center">Múltipla Escolha</span>
+        </div>
       </div>
     </div>
     <div v-else class="print-container">
@@ -168,7 +169,7 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import draggable from 'vuedraggable'
 import RichTextEditor from './ui/rich-text-editor.vue'
-import { Trash, GripVertical, X, Plus, Printer, Edit } from 'lucide-vue-next'
+import { Trash, GripVertical, X, Plus, Printer, Edit, ListChecks } from 'lucide-vue-next'
 import { Button } from './ui/button'
 import ImageUploadPreview from './ui/image-upload-preview.vue'
 
@@ -205,8 +206,16 @@ function newQuestion() {
 
 const questions = ref([newQuestion()])
 
-function addQuestion() {
-  questions.value.push(newQuestion())
+function addQuestion(type) {
+  questions.value.push({
+    id: Date.now() + Math.random(),
+    text: '',
+    image: '',
+    displayMode: 'cover',
+    alternatives: [newAlternative(), newAlternative(), newAlternative()],
+    correct: 0,
+    type
+  })
 }
 function removeQuestion(qIdx) {
   questions.value.splice(qIdx, 1)
