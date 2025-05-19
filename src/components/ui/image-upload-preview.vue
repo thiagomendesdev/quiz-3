@@ -19,9 +19,9 @@
       @change="onFileChange"
       :disabled="isLoading"
     />
-    <div v-if="imageUrl" class="relative flex-shrink-0" :style="imageBoxStyle">
+    <div v-if="imageUrl" class="relative flex-shrink-0 group" :style="imageBoxStyle">
       <div 
-        :class="['rounded-md w-full h-full', displayModeClass]" 
+        :class="['rounded-md w-full h-full overflow-hidden', displayModeClass]" 
         :style="{
           backgroundColor: dominantColor
         }"
@@ -29,14 +29,14 @@
         <img
           :src="imageUrl"
           class="w-full h-full"
-          :class="displayModeClass"
+          :class="[displayModeClass, { 'cursor-pointer': !isPrintMode }]"
           :style="imgStyle"
-          @click="toggleExpand"
+          @click="!isPrintMode && toggleExpand()"
           @load="onImageLoad"
           alt="Imagem da questão ou alternativa"
         />
       </div>
-      <div class="absolute top-2 right-2 flex gap-2 z-10">
+      <div v-if="!isPrintMode" class="absolute top-2 right-2 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
         <button @click.stop="toggleExpand" class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center" type="button">
           <ExpandIcon v-if="!isContain" :size="16" />
           <ShrinkIcon v-else :size="16" />
@@ -195,5 +195,11 @@ img {
   .object-contain {
     background-color: var(--print-bg-color) !important;
   }
+}
+
+/* Garantir que as bordas arredondadas sejam mantidas em ambos os modos */
+.rounded-md {
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 </style> 
