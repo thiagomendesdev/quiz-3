@@ -20,14 +20,22 @@
       :disabled="isLoading"
     />
     <div v-if="imageUrl" class="relative flex-shrink-0" :style="imageBoxStyle">
-      <img
-        :src="imageUrl"
-        :class="['rounded-md w-full h-full', displayModeClass]"
-        :style="imgStyle"
-        @click="toggleExpand"
-        @load="onImageLoad"
-        alt="Imagem da questão ou alternativa"
-      />
+      <div 
+        :class="['rounded-md w-full h-full', displayModeClass]" 
+        :style="{
+          backgroundColor: dominantColor
+        }"
+      >
+        <img
+          :src="imageUrl"
+          class="w-full h-full"
+          :class="displayModeClass"
+          :style="imgStyle"
+          @click="toggleExpand"
+          @load="onImageLoad"
+          alt="Imagem da questão ou alternativa"
+        />
+      </div>
       <div class="absolute top-2 right-2 flex gap-2 z-10">
         <button @click.stop="toggleExpand" class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center" type="button">
           <ExpandIcon v-if="!isContain" :size="16" />
@@ -51,7 +59,8 @@ const props = defineProps({
   modelValue: String,
   maxWidth: { type: [Number, Boolean], default: false },
   maxHeight: { type: [Number, Boolean], default: false },
-  displayMode: { type: String, default: '' } // 'cover' ou 'contain'
+  displayMode: { type: String, default: '' }, // 'cover' ou 'contain'
+  isPrintMode: { type: Boolean, default: false }
 })
 const emit = defineEmits(['update:modelValue', 'update:displayMode'])
 
@@ -175,7 +184,16 @@ img {
 }
 
 .object-contain {
-  background-color: v-bind(dominantColor);
-  transition: background-color 0.3s ease;
+  object-fit: contain;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+@media print {
+  .object-contain {
+    background-color: var(--print-bg-color) !important;
+  }
 }
 </style> 

@@ -37,6 +37,7 @@
                       :max-width="true"
                       :max-height="300"
                       :display-mode="question.displayMode"
+                      :is-print-mode="mode === MODE_IMPRESSAO"
                       @update:displayMode="val => question.displayMode = val"
                     />
                     <rich-text-editor
@@ -50,6 +51,7 @@
                       :max-width="32"
                       :max-height="32"
                       :display-mode="question.displayMode"
+                      :is-print-mode="mode === MODE_IMPRESSAO"
                       @update:displayMode="val => question.displayMode = val"
                     />
                     <div class="flex-1 min-w-0">
@@ -83,6 +85,7 @@
                             :max-width="150"
                             :max-height="150"
                             :display-mode="alt.displayMode"
+                            :is-print-mode="mode === MODE_IMPRESSAO"
                             @update:displayMode="val => alt.displayMode = val"
                           />
                           <div class="flex-1 min-w-0">
@@ -135,14 +138,29 @@
         <div class="flex-1">
           <div class="rounded-lg border bg-card p-4 shadow-sm">
             <div v-if="question.image" class="mb-2" style="width:100%;">
-              <img :src="question.image" :style="`width:100%; max-height:300px; object-fit:${question.displayMode === 'contain' ? 'contain' : 'cover'}; display:block; margin:0 auto; border-radius:8px; background:#f3f3f3;`" alt="Imagem da questão" />
+              <ImageUploadPreview
+                v-model="question.image"
+                :max-width="true"
+                :max-height="300"
+                :display-mode="question.displayMode"
+                :is-print-mode="true"
+                @update:displayMode="val => question.displayMode = val"
+              />
             </div>
             <div class="print-question-title">
               <span v-html="question.text" class="print-question-text" />
             </div>
             <div class="print-alternatives mt-2">
               <div v-for="(alt, aIdx) in question.alternatives" :key="alt.id" class="print-alternative flex items-center mb-1">
-                <img v-if="alt.image" :src="alt.image" :style="`width: 150px; height: 150px; object-fit: ${alt.displayMode === 'contain' ? 'contain' : 'cover'}; border-radius: 8px; margin-right: 12px; background:#f3f3f3;`" alt="Imagem alternativa" />
+                <ImageUploadPreview
+                  v-if="alt.image"
+                  v-model="alt.image"
+                  :max-width="150"
+                  :max-height="150"
+                  :display-mode="alt.displayMode"
+                  :is-print-mode="true"
+                  @update:displayMode="val => alt.displayMode = val"
+                />
                 <span class="print-radio"></span>
                 <span v-html="alt.text" class="print-alternative-text ml-3" />
               </div>
