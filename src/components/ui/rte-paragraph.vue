@@ -67,10 +67,16 @@ onMounted(() => {
     },
     theme: 'bubble',
     placeholder: props.placeholder,
-    formats: ['bold', 'italic', 'underline', 'strike', 'script', 'color', 'background', 'formula'] // Lista explícita de formatos permitidos
+    formats: ['bold', 'italic', 'underline', 'strike', 'script', 'color', 'background', 'formula'], // Lista explícita de formatos permitidos
+    bounds: editor.value,
+    scrollingContainer: editor.value
   }
 
   quill = new Quill(editor.value, options)
+
+  // Forçar remoção de padding após inicialização
+  quill.root.style.padding = '0'
+  quill.root.querySelector('.ql-editor').style.padding = '0'
 
   // Set initial content
   if (props.modelValue) {
@@ -146,6 +152,7 @@ onBeforeUnmount(() => {
   box-shadow: none !important;
 }
 
+/* Override Quill's default editor padding */
 .rte-paragraph .ql-editor {
   border: none !important;
   padding: 0 !important;
@@ -153,6 +160,13 @@ onBeforeUnmount(() => {
   border-radius: 0 !important;
   box-shadow: none !important;
   line-height: normal !important;
+}
+
+/* Handle placeholder state */
+.rte-paragraph .ql-editor.ql-blank::before {
+  padding: 0 !important;
+  margin: 0 !important;
+  left: 0 !important;
 }
 
 .rte-paragraph .ql-editor p {
