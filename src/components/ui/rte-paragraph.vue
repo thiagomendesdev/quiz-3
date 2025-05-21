@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[38px] rounded-md border-1px bg-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
+  <div class="rte-paragraph min-h-[38px]">
     <div ref="editor" class="min-h-[38px]"></div>
   </div>
 </template>
@@ -106,7 +106,6 @@ onBeforeUnmount(() => {
 <style>
 .rich-text-editor {
   border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
   overflow: hidden;
 }
 
@@ -114,7 +113,6 @@ onBeforeUnmount(() => {
   border-top: none;
   border-left: none;
   border-right: none;
-  background-color: #f8fafc;
   border-bottom: 1px solid #e2e8f0;
 }
 
@@ -125,12 +123,53 @@ onBeforeUnmount(() => {
 }
 
 .rich-text-editor .ql-editor {
-  padding: 1rem;
+  padding: 0;
 }
 
 .rich-text-editor .ql-editor.ql-blank::before {
   color: #94a3b8;
   font-style: normal;
+}
+
+/* Make editor look like inline text */
+.rte-paragraph {
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.rte-paragraph .ql-container.ql-bubble {
+  border: none !important;
+  padding: 0 !important;
+  background: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.rte-paragraph .ql-editor {
+  border: none !important;
+  padding: 0 !important;
+  background: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  line-height: normal !important;
+}
+
+.rte-paragraph .ql-editor p {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: normal !important;
+}
+
+/* Remove focus styles only from the editor */
+.rte-paragraph .ql-container:focus,
+.rte-paragraph .ql-container:focus-within,
+.rte-paragraph .ql-editor:focus,
+.rte-paragraph .ql-editor:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  ring: none !important;
+  border: none !important;
 }
 
 /* Garantir z-index da bubble do Quill */
