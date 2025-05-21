@@ -77,31 +77,31 @@
             <h4 class="font-medium mb-2">Button Sizes</h4>
             <div class="flex items-center gap-4">
               <Button 
-                size="icon" 
+                size="icon-sm" 
                 variant="default" 
-                class="h-8 w-8 copy-button" 
-                title="Button size='icon' class='h-8 w-8'"
+                title="Button size='icon-sm'"
                 @click="copyToClipboard"
+                class="copy-button"
               >
                 <TrashIcon class="h-4 w-4" />
               </Button>
               <Button 
                 size="icon" 
                 variant="default" 
-                class="h-10 w-10 copy-button" 
-                title="Button size='icon' class='h-10 w-10'"
+                title="Button size='icon'"
                 @click="copyToClipboard"
+                class="copy-button"
               >
-                <TrashIcon class="h-5 w-5" />
+                <TrashIcon class="h-4 w-4" />
               </Button>
               <Button 
-                size="icon" 
+                size="icon-lg" 
                 variant="default" 
-                class="h-12 w-12 copy-button" 
-                title="Button size='icon' class='h-12 w-12'"
+                title="Button size='icon-lg'"
                 @click="copyToClipboard"
+                class="copy-button"
               >
-                <TrashIcon class="h-6 w-6" />
+                <TrashIcon class="h-4 w-4" />
               </Button>
             </div>
           </div>
@@ -466,6 +466,122 @@
                 title="Input with error state"
                 @click="copyToClipboard"
               />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Border Radius -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">Border Radius</h2>
+      
+      <div class="grid gap-4">
+        <div class="p-4 border rounded-lg">
+          <h4 class="font-medium mb-4">Radix Border Radius</h4>
+          <div class="grid gap-4">
+            <div class="flex items-center gap-4">
+              <div 
+                class="w-20 h-20 bg-primary rounded-none flex items-center justify-center text-primary-foreground copy-button"
+                title="rounded-none"
+                @click="copyToClipboard"
+              >
+                None
+              </div>
+              <div class="flex-1">
+                <code class="text-sm">rounded-none</code>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div 
+                class="w-20 h-20 bg-primary rounded-sm flex items-center justify-center text-primary-foreground copy-button"
+                title="rounded-sm"
+                @click="copyToClipboard"
+              >
+                Small
+              </div>
+              <div class="flex-1">
+                <code class="text-sm">rounded-sm</code>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div 
+                class="w-20 h-20 bg-primary rounded-md flex items-center justify-center text-primary-foreground copy-button"
+                title="rounded-md"
+                @click="copyToClipboard"
+              >
+                Medium
+              </div>
+              <div class="flex-1">
+                <code class="text-sm">rounded-md</code>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div 
+                class="w-20 h-20 bg-primary rounded-lg flex items-center justify-center text-primary-foreground copy-button"
+                title="rounded-lg"
+                @click="copyToClipboard"
+              >
+                Large
+              </div>
+              <div class="flex-1">
+                <code class="text-sm">rounded-lg</code>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div 
+                class="w-20 h-20 bg-primary rounded-xl flex items-center justify-center text-primary-foreground copy-button"
+                title="rounded-xl"
+                @click="copyToClipboard"
+              >
+                XL
+              </div>
+              <div class="flex-1">
+                <code class="text-sm">rounded-xl</code>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div 
+                class="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground copy-button"
+                title="rounded-2xl"
+                @click="copyToClipboard"
+              >
+                2XL
+              </div>
+              <div class="flex-1">
+                <code class="text-sm">rounded-2xl</code>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div 
+                class="w-20 h-20 bg-primary rounded-3xl flex items-center justify-center text-primary-foreground copy-button"
+                title="rounded-3xl"
+                @click="copyToClipboard"
+              >
+                3XL
+              </div>
+              <div class="flex-1">
+                <code class="text-sm">rounded-3xl</code>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div 
+                class="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-primary-foreground copy-button"
+                title="rounded-full"
+                @click="copyToClipboard"
+              >
+                Full
+              </div>
+              <div class="flex-1">
+                <code class="text-sm">rounded-full</code>
+              </div>
             </div>
           </div>
         </div>

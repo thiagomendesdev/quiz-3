@@ -88,4 +88,9 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Estilo global para ícones do Lucide */
+[data-lucide] {
+  stroke-width: 1px !important;
 } 
