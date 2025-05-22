@@ -11,39 +11,8 @@
         <template #item="{ element: question, index: qIdx }">
           <div class="flex items-start gap-4">
             <div class="flex-1 relative group">
-              <Toolbar
-                :show="hoveredQuestion === qIdx"
-                class="z-20 left-float"
-              >
-                <Button
-                  size="icon-sm" variant="default"
-                  @click="removeQuestion(qIdx)"
-                  title="Remover questão"
-                  type="button"
-                >
-                  <Trash :size="16" />
-                </Button>
-                <Button
-                  size="icon-sm" variant="default"
-                  @click="triggerImageUpload(qIdx)"
-                  title="Adicionar imagem à questão"
-                  type="button"
-                >
-                  <ImagePlusIcon :size="16" />
-                </Button>
-                <Button size="icon-sm" variant="default"
-                  class="question-drag"
-                  title="Arraste para reordenar"
-                  type="button"
-                >
-                  <GripVertical :size="16" />
-                </Button>
-              </Toolbar>
               <div class="rounded-lg border bg-card p-4 shadow-sm question-block relative">
-                <div class="mb-4"
-                  @mouseenter="hoveredQuestion = qIdx"
-                  @mouseleave="hoveredQuestion = null"
-                >
+                <div class="mb-4">
                   <div v-if="question.image" class="flex flex-col gap-2">
                     <ImageUploadPreview
                       v-model="question.image"
@@ -53,12 +22,74 @@
                       @update:displayMode="val => question.displayMode = val"
                       :ref="setImageUploadRef(qIdx)"
                     />
-                    <RteLarge
-                      v-model="question.text"
-                      placeholder="Digite aqui a questão"
-                    />
+                    <div class="relative"
+                         @mouseenter="hoveredQuestion = qIdx"
+                         @mouseleave="hoveredQuestion = null">
+                      <Toolbar
+                        :show="hoveredQuestion === qIdx"
+                        class="z-20 left-float"
+                      >
+                        <Button
+                          size="icon-sm" variant="default"
+                          @click="removeQuestion(qIdx)"
+                          title="Remover questão"
+                          type="button"
+                        >
+                          <Trash :size="16" />
+                        </Button>
+                        <Button
+                          size="icon-sm" variant="default"
+                          @click="triggerImageUpload(qIdx)"
+                          title="Adicionar imagem à questão"
+                          type="button"
+                        >
+                          <ImagePlusIcon :size="16" />
+                        </Button>
+                        <Button size="icon-sm" variant="default"
+                          class="question-drag"
+                          title="Arraste para reordenar"
+                          type="button"
+                        >
+                          <GripVertical :size="16" />
+                        </Button>
+                      </Toolbar>
+                      <RteLarge
+                        v-model="question.text"
+                        placeholder="Digite aqui a questão"
+                      />
+                    </div>
                   </div>
-                  <div v-else class="flex items-center gap-2">
+                  <div v-else class="flex items-center gap-2 relative"
+                       @mouseenter="hoveredQuestion = qIdx"
+                       @mouseleave="hoveredQuestion = null">
+                    <Toolbar
+                      :show="hoveredQuestion === qIdx"
+                      class="z-20 left-float"
+                    >
+                      <Button
+                        size="icon-sm" variant="default"
+                        @click="removeQuestion(qIdx)"
+                        title="Remover questão"
+                        type="button"
+                      >
+                        <Trash :size="16" />
+                      </Button>
+                      <Button
+                        size="icon-sm" variant="default"
+                        @click="triggerImageUpload(qIdx)"
+                        title="Adicionar imagem à questão"
+                        type="button"
+                      >
+                        <ImagePlusIcon :size="16" />
+                      </Button>
+                      <Button size="icon-sm" variant="default"
+                        class="question-drag"
+                        title="Arraste para reordenar"
+                        type="button"
+                      >
+                        <GripVertical :size="16" />
+                      </Button>
+                    </Toolbar>
                     <ImageUploadPreview
                       v-model="question.image"
                       :max-width="32"
@@ -337,22 +368,22 @@ function triggerAltImageUpload(qIdx, aIdx) {
 .left-float {
   position: absolute;
   left: 1.5rem;
-  top: 1.4rem;
+  top: 50%;
   display: flex;
   width: max-content;
   min-width: unset;
   max-width: max-content;
-  transform: translateX(-100%);
+  transform: translate(-100%, -50%);
   z-index: 200;
 }
 
 .left-float-alt {
   position: absolute;
   left: 0.5rem;
-  top: 0.33rem;
+  top: 50%;
   display: flex;
   width: max-content;
-  transform: translateX(-100%);
+  transform: translate(-100%, -50%);
   z-index: 200;
 }
 </style> 
