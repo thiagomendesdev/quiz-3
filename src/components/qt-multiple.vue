@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container bg-secondary">
+  <div class="main-container">
     <div class="p-8 min-h-screen">
       <draggable
         v-model="questions"
@@ -24,13 +24,12 @@
                   <Trash :size="16" />
                 </Button>
                 <Button
-                  v-if="!question.image"
                   size="icon-sm" variant="default"
                   @click="triggerImageUpload(qIdx)"
                   title="Adicionar imagem à questão"
                   type="button"
                 >
-                  <Plus :size="16" />
+                  <ImagePlusIcon :size="16" />
                 </Button>
                 <Button size="icon-sm" variant="default"
                   class="question-drag"
@@ -102,13 +101,12 @@
                           <Trash :size="16" />
                         </Button>
                         <Button
-                          v-if="!alt.image"
                           size="icon-sm" variant="default"
                           @click="triggerAltImageUpload(qIdx, aIdx)"
                           title="Adicionar imagem à alternativa"
                           type="button"
                         >
-                          <Plus :size="16" />
+                          <ImagePlusIcon :size="16" />
                         </Button>
                         <Button size="icon-sm" variant="default"
                           class="alt-drag"
@@ -171,7 +169,7 @@ import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import draggable from 'vuedraggable'
 import RteLarge from './ui/rte-large.vue'
 import RteParagraph from './ui/rte-paragraph.vue'
-import { Trash, GripVertical, Plus, ListChecks } from 'lucide-vue-next'
+import { Trash, GripVertical, Plus, ListChecks, ImagePlus as ImagePlusIcon } from 'lucide-vue-next'
 import { Button } from './ui/button'
 import ImageUploadPreview from './ui/image-upload-preview.vue'
 import QuestionTypeCard from './ui/question-type-card.vue'

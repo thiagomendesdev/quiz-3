@@ -19,31 +19,27 @@
       @change="onFileChange"
       :disabled="isLoading"
     />
-    <div v-if="imageUrl" class="relative flex-shrink-0 group" :style="imageBoxStyle">
+    <div v-if="imageUrl" class="relative flex-shrink-0" :style="imageBoxStyle">
       <div 
-        :class="['rounded-md w-full h-full overflow-hidden', displayModeClass]" 
+        :class="['rounded-md w-full h-full overflow-hidden relative', displayModeClass]" 
         :style="{
           backgroundColor: dominantColor
         }"
       >
         <img
           :src="imageUrl"
-          class="w-full h-full"
-          :class="[displayModeClass, 'cursor-pointer']"
+          class="w-full h-full peer cursor-pointer"
+          :class="[displayModeClass]"
           :style="imgStyle"
           @click="toggleExpand()"
           @load="onImageLoad"
           alt="Imagem da questão ou alternativa"
         />
-      </div>
-      <div class="absolute top-2 right-2 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button @click.stop="toggleExpand" class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center" type="button">
-          <ExpandIcon v-if="!isContain" :size="16" />
-          <ShrinkIcon v-else :size="16" />
-        </button>
-        <button @click.stop="removeImage" class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center" type="button">
-          <TrashIcon :size="16" />
-        </button>
+        <div class="absolute top-2 right-2 flex gap-2 z-10 opacity-0 peer-hover:opacity-100 hover:opacity-100 transition-opacity btn-remove">
+          <Button @click.stop="removeImage" size="icon-sm" variant="default" type="button">
+            <TrashIcon :size="16" />
+          </Button>
+        </div>
       </div>
     </div>
   </div>
@@ -54,6 +50,7 @@ import { ref, computed, watch } from 'vue'
 import { ImagePlus as ImagePlusIcon, Maximize2 as ExpandIcon, Minimize2 as ShrinkIcon, Trash as TrashIcon, Loader2 as LoaderIcon } from 'lucide-vue-next'
 import { uploadToImageKit } from '@/lib/imagekit-upload'
 import * as FastAverageColor from 'fast-average-color'
+import { Button } from './button'
 
 const props = defineProps({
   modelValue: String,
@@ -197,9 +194,4 @@ img {
   }
 }
 
-/* Garantir que as bordas arredondadas sejam mantidas em ambos os modos */
-.rounded-md {
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
 </style> 

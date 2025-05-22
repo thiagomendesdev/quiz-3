@@ -1,9 +1,7 @@
 <template>
-  <transition name="fade">
-    <div v-if="visible" class="toolbar-float bg-foreground text-foreground" @mouseenter="hovering = true" @mouseleave="hovering = false">
-      <slot />
-    </div>
-  </transition>
+  <div v-if="visible" class="toolbar-float bg-foreground text-foreground" @mouseenter="hovering = true" @mouseleave="hovering = false">
+    <slot />
+  </div>
 </template>
 
 <script setup>
@@ -39,12 +37,5 @@ watch(hovering, (val) => {
   padding: 0.15rem 0.15rem;
   z-index: 10;
   align-items: center;
-  transition: opacity 0.2s;
-}
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.2s;
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
 }
 </style> 
