@@ -58,7 +58,7 @@
                       @update:displayMode="val => question.displayMode = val"
                       :ref="setImageUploadRef(qIdx)"
                     />
-                    <rich-text-editor
+                    <RteLarge
                       v-model="question.text"
                       placeholder="Digite aqui a questão"
                     />
@@ -75,7 +75,7 @@
                       hide-add-button
                     />
                     <div class="flex-1 min-w-0">
-                      <rich-text-editor
+                      <RteLarge
                         v-model="question.text"
                         placeholder="Digite aqui a questão"
                       />
@@ -136,7 +136,7 @@
                             hide-add-button
                           />
                           <div class="flex-1 min-w-0">
-                            <rich-text-editor
+                            <RteParagraph
                               v-model="alt.text"
                               :placeholder="`Alternativa ${aIdx + 1}`"
                             />
@@ -222,6 +222,8 @@
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import draggable from 'vuedraggable'
 import RichTextEditor from './ui/rich-text-editor.vue'
+import RteLarge from './ui/rte-large.vue'
+import RteParagraph from './ui/rte-paragraph.vue'
 import { Trash, GripVertical, X, Plus, Printer, Edit, ListChecks } from 'lucide-vue-next'
 import { Button } from './ui/button'
 import ImageUploadPreview from './ui/image-upload-preview.vue'
