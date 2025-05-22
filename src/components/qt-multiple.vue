@@ -12,25 +12,42 @@
           <div class="flex items-start gap-4">
             <div class="flex flex-col items-center gap-1 mt-6">
               <span class="text-xl font-regular text-foreground select-none">{{ qIdx + 1 }}</span>
-              <button
-                class="question-drag h-10 w-10 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
-                title="Arraste para reordenar"
-                type="button"
-              >
-                <GripVertical :size="16" />
-              </button>
-              <button
-                class="h-10 w-10 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
-                @click="removeQuestion(qIdx)"
-                title="Remover questão"
-                type="button"
-              >
-                <Trash :size="16" />
-              </button>
             </div>
-            <div class="flex-1">
-              <div class="rounded-lg border bg-card p-4 shadow-sm">
-                <div class="mb-4">
+            <div class="flex-1 relative group">
+              <div class="rounded-lg border bg-card p-4 shadow-sm question-block">
+                <Toolbar
+                  :show="hoveredQuestion === qIdx"
+                  class="z-20"
+                >
+                  <button
+                    class="question-drag h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
+                    title="Arraste para reordenar"
+                    type="button"
+                  >
+                    <GripVertical :size="16" />
+                  </button>
+                  <button
+                    v-if="!question.image"
+                    class="h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
+                    @click="triggerImageUpload(qIdx)"
+                    title="Adicionar imagem à questão"
+                    type="button"
+                  >
+                    <Plus :size="16" />
+                  </button>
+                  <button
+                    class="h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
+                    @click="removeQuestion(qIdx)"
+                    title="Remover questão"
+                    type="button"
+                  >
+                    <Trash :size="16" />
+                  </button>
+                </Toolbar>
+                <div class="mb-4"
+                  @mouseenter="hoveredQuestion = qIdx"
+                  @mouseleave="hoveredQuestion = null"
+                >
                   <div v-if="question.image" class="flex flex-col gap-2">
                     <ImageUploadPreview
                       v-model="question.image"
@@ -39,6 +56,7 @@
                       :display-mode="question.displayMode"
                       :is-print-mode="mode === MODE_IMPRESSAO"
                       @update:displayMode="val => question.displayMode = val"
+                      :ref="setImageUploadRef(qIdx)"
                     />
                     <rich-text-editor
                       v-model="question.text"
@@ -53,6 +71,8 @@
                       :display-mode="question.displayMode"
                       :is-print-mode="mode === MODE_IMPRESSAO"
                       @update:displayMode="val => question.displayMode = val"
+                      :ref="setImageUploadRef(qIdx)"
+                      style="display:none;"
                     />
                     <div class="flex-1 min-w-0">
                       <rich-text-editor
@@ -180,13 +200,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import draggable from 'vuedraggable'
 import RichTextEditor from './ui/rich-text-editor.vue'
 import { Trash, GripVertical, X, Plus, Printer, Edit, ListChecks } from 'lucide-vue-next'
 import { Button } from './ui/button'
 import ImageUploadPreview from './ui/image-upload-preview.vue'
 import QuestionTypeCard from './ui/question-type-card.vue'
+import Toolbar from './ui/toolbar.vue'
 
 const MODE_EDICAO = 'edicao'
 const MODE_IMPRESSAO = 'impressao'
@@ -246,6 +267,25 @@ function removeAlternative(qIdx, aIdx) {
 }
 function setCorrect(qIdx, aIdx) {
   questions.value[qIdx].correct = aIdx
+}
+
+const hoveredQuestion = ref(null)
+const imageUploadRefs = ref([])
+
+function setImageUploadRef(qIdx) {
+  return (el) => {
+    if (el) imageUploadRefs.value[qIdx] = el
+  }
+}
+
+function triggerImageUpload(qIdx) {
+  nextTick(() => {
+    const comp = imageUploadRefs.value[qIdx]
+    if (comp && comp.$el) {
+      const input = comp.$el.querySelector('input[type="file"]')
+      if (input) input.click()
+    }
+  })
 }
 </script>
 
