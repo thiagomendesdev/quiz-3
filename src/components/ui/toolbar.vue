@@ -30,14 +30,13 @@ watch(hovering, (val) => {
 <style scoped>
 .toolbar-float {
   position: absolute;
-  top: 0.5rem;
+  top: 0.15rem;
   right: 0.5rem;
   display: flex;
-  gap: 0.5rem;
-  background: rgba(255,255,255,0.95);
+  gap: 0.15rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-  padding: 0.25rem 0.5rem;
+  padding: 0.15rem 0.15rem;
   z-index: 10;
   align-items: center;
   transition: opacity 0.2s;
