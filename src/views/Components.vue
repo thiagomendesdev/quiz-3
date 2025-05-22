@@ -98,7 +98,7 @@
             <!-- Tamanhos -->
             <div class="p-4 border rounded-lg">
               <h4 class="font-medium mb-2">Button Sizes</h4>
-              <div class="flex items-center gap-4">
+              <div class="flex items-center gap-4 mb-4">
                 <Button 
                   size="icon-sm" 
                   variant="default" 
@@ -126,6 +126,11 @@
                 >
                   <TrashIcon class="h-4 w-4" />
                 </Button>
+              </div>
+              <div class="flex items-center gap-4">
+                <Button size="sm" variant="default"><PlusIcon class="mr-2" />sm</Button>
+                <Button variant="default"><PlusIcon class="mr-2" />default</Button>
+                <Button size="lg" variant="default"><PlusIcon class="mr-2" />lg</Button>
               </div>
             </div>
 
@@ -271,6 +276,12 @@
                   <TrashIcon class="mr-2 h-4 w-4" />
                   Deletar
                 </Button>
+              </div>
+              <h4 class="font-medium mb-2 mt-6">Button with Icon Sizes</h4>
+              <div class="flex gap-4 flex-wrap items-center">
+                <Button size="sm" variant="default"><PlusIcon class="mr-1" />sm</Button>
+                <Button variant="default"><PlusIcon class="mr-2" />default</Button>
+                <Button size="lg" variant="default"><PlusIcon class="mr-2" />lg</Button>
               </div>
             </div>
           </div>

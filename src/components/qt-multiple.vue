@@ -138,16 +138,16 @@
                     </div>
                   </template>
                 </draggable>
-                <div class="flex justify-center mt-4">
-                  <Button
-                    variant="ghost"
-                    @click="addAlternative(qIdx)"
-                    type="button"
-                  >
-                    <Plus class="mr-2 h-4 w-4" />
-                    Adicionar alternativa
-                  </Button>
-                </div>
+                <Button
+                  variant="default"
+                  size="sm"
+                  @click="addAlternative(qIdx)"
+                  type="button"
+                  class="add-alt-btn"
+                >
+                  <Plus class="mr-2" />
+                  Adicionar alternativa
+                </Button>
               </div>
             </div>
           </div>
@@ -355,5 +355,18 @@ function triggerAltImageUpload(qIdx, aIdx) {
   width: max-content;
   transform: translateX(-100%);
   z-index: 200;
+}
+
+/* Botão flutuante de adicionar alternativa */
+.add-alt-btn {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -16px;
+  z-index: 20;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 </style> 
