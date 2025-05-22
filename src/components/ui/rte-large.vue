@@ -157,7 +157,6 @@ onBeforeUnmount(() => {
   margin: 0 !important;
   padding: 0 !important;
   min-height: 1.6rem !important;
-  line-height: 1.6rem !important;
 }
 
 .rte-large .ql-editor.ql-blank::before {
@@ -176,7 +175,6 @@ onBeforeUnmount(() => {
 .rte-large .ql-editor.ql-blank > p {
   display: block !important;
   min-height: 1.6rem !important;
-  line-height: 1.6rem !important;
 }
 
 .rte-large .ql-editor.ql-blank > p > br {
