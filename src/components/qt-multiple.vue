@@ -72,7 +72,7 @@
                       :is-print-mode="mode === MODE_IMPRESSAO"
                       @update:displayMode="val => question.displayMode = val"
                       :ref="setImageUploadRef(qIdx)"
-                      style="display:none;"
+                      hide-add-button
                     />
                     <div class="flex-1 min-w-0">
                       <rich-text-editor
@@ -90,14 +90,39 @@
                   class="space-y-1"
                 >
                   <template #item="{ element: alt, index: aIdx }">
-                    <div class="flex items-center gap-1 group">
-                      <button
-                        class="alt-drag h-10 w-10 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        title="Arraste para reordenar"
-                        type="button"
+                    <div class="flex items-center gap-1 group relative alt-block"
+                      @mouseenter="hoveredAlt = `${qIdx}-${aIdx}`"
+                      @mouseleave="hoveredAlt = null"
+                    >
+                      <Toolbar
+                        :show="hoveredAlt === `${qIdx}-${aIdx}`"
+                        class="z-20"
                       >
-                        <GripVertical :size="16" />
-                      </button>
+                        <button
+                          class="alt-drag h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
+                          title="Arraste para reordenar"
+                          type="button"
+                        >
+                          <GripVertical :size="16" />
+                        </button>
+                        <button
+                          v-if="!alt.image"
+                          class="h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
+                          @click="triggerAltImageUpload(qIdx, aIdx)"
+                          title="Adicionar imagem à alternativa"
+                          type="button"
+                        >
+                          <Plus :size="16" />
+                        </button>
+                        <button
+                          class="alt-remove h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
+                          @click="removeAlternative(qIdx, aIdx)"
+                          title="Remover alternativa"
+                          type="button"
+                        >
+                          <X :size="16" />
+                        </button>
+                      </Toolbar>
                       <div class="flex-1">
                         <div class="flex items-center gap-2">
                           <ImageUploadPreview
@@ -107,6 +132,8 @@
                             :display-mode="alt.displayMode"
                             :is-print-mode="mode === MODE_IMPRESSAO"
                             @update:displayMode="val => alt.displayMode = val"
+                            :ref="setAltImageUploadRef(qIdx, aIdx)"
+                            hide-add-button
                           />
                           <div class="flex-1 min-w-0">
                             <rich-text-editor
@@ -116,14 +143,6 @@
                           </div>
                         </div>
                       </div>
-                      <button
-                        class="alt-remove h-10 w-10 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        @click="removeAlternative(qIdx, aIdx)"
-                        title="Remover alternativa"
-                        type="button"
-                      >
-                        <X :size="16" />
-                      </button>
                     </div>
                   </template>
                 </draggable>
@@ -270,17 +289,34 @@ function setCorrect(qIdx, aIdx) {
 }
 
 const hoveredQuestion = ref(null)
+const hoveredAlt = ref(null)
 const imageUploadRefs = ref([])
+const altImageUploadRefs = ref({})
 
 function setImageUploadRef(qIdx) {
   return (el) => {
     if (el) imageUploadRefs.value[qIdx] = el
   }
 }
+function setAltImageUploadRef(qIdx, aIdx) {
+  return (el) => {
+    if (!altImageUploadRefs.value[qIdx]) altImageUploadRefs.value[qIdx] = {}
+    if (el) altImageUploadRefs.value[qIdx][aIdx] = el
+  }
+}
 
 function triggerImageUpload(qIdx) {
   nextTick(() => {
     const comp = imageUploadRefs.value[qIdx]
+    if (comp && comp.$el) {
+      const input = comp.$el.querySelector('input[type="file"]')
+      if (input) input.click()
+    }
+  })
+}
+function triggerAltImageUpload(qIdx, aIdx) {
+  nextTick(() => {
+    const comp = altImageUploadRefs.value[qIdx]?.[aIdx]
     if (comp && comp.$el) {
       const input = comp.$el.querySelector('input[type="file"]')
       if (input) input.click()

@@ -1,7 +1,7 @@
 <template>
   <div :class="containerClass" :style="containerStyle">
     <button
-      v-if="!imageUrl"
+      v-if="!imageUrl && !hideAddButton"
       class="h-10 w-10 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
       type="button"
       @click="triggerFileInput"
@@ -60,7 +60,8 @@ const props = defineProps({
   maxWidth: { type: [Number, Boolean], default: false },
   maxHeight: { type: [Number, Boolean], default: false },
   displayMode: { type: String, default: '' }, // 'cover' ou 'contain'
-  isPrintMode: { type: Boolean, default: false }
+  isPrintMode: { type: Boolean, default: false },
+  hideAddButton: { type: Boolean, default: false }
 })
 const emit = defineEmits(['update:modelValue', 'update:displayMode'])
 
