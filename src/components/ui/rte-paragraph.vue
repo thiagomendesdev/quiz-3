@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
 }
 
 .rte-inline .ql-editor.ql-blank::before {
-  color: #94a3b8;
+  color: hsl(var(--muted-foreground)) !important;
   font-style: normal;
   padding: 0 !important;
 }

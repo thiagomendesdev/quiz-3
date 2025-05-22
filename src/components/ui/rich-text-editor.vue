@@ -129,7 +129,7 @@ onBeforeUnmount(() => {
 }
 
 .rich-text-editor .ql-editor.ql-blank::before {
-  color: #94a3b8;
+  color: hsl(var(--muted-foreground)) !important;
   font-style: normal;
 }
 

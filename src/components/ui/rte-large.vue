@@ -160,7 +160,7 @@ onBeforeUnmount(() => {
 }
 
 .rte-large .ql-editor.ql-blank::before {
-  color: #64748b !important; /* text-muted-foreground */
+  color: hsl(var(--muted-foreground)) !important;
   font-style: normal !important;
   font-size: 1.125rem !important;
   line-height: 1.75rem !important;
