@@ -1,6 +1,6 @@
 <template>
-  <div class="rte-paragraph min-h-[38px]">
-    <div ref="editor" class="min-h-[38px]"></div>
+  <div class="rte-inline">
+    <div ref="editor"></div>
   </div>
 </template>
 
@@ -67,16 +67,10 @@ onMounted(() => {
     },
     theme: 'bubble',
     placeholder: props.placeholder,
-    formats: ['bold', 'italic', 'underline', 'strike', 'script', 'color', 'background', 'formula'], // Lista explícita de formatos permitidos
-    bounds: editor.value,
-    scrollingContainer: editor.value
+    formats: ['bold', 'italic', 'underline', 'strike', 'script', 'color', 'background', 'formula'] // Lista explícita de formatos permitidos
   }
 
   quill = new Quill(editor.value, options)
-
-  // Forçar remoção de padding após inicialização
-  quill.root.style.padding = '0'
-  quill.root.querySelector('.ql-editor').style.padding = '0'
 
   // Set initial content
   if (props.modelValue) {
@@ -110,84 +104,43 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
-.rich-text-editor {
-  border: 1px solid #e2e8f0;
-  overflow: hidden;
-}
-
-.rich-text-editor .ql-toolbar {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.rich-text-editor .ql-container {
-  border: none;
-  font-size: 1rem;
-  min-height: 100px;
-}
-
-.rich-text-editor .ql-editor {
-  padding: 0;
-}
-
-.rich-text-editor .ql-editor.ql-blank::before {
-  color: #94a3b8;
-  font-style: normal;
-}
-
-/* Make editor look like inline text */
-.rte-paragraph {
+.rte-inline,
+.rte-inline .ql-container,
+.rte-inline .ql-editor {
   border: none !important;
-  background: none !important;
-  box-shadow: none !important;
-}
-
-.rte-paragraph .ql-container.ql-bubble {
-  border: none !important;
-  padding: 0 !important;
   background: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-}
-
-/* Override Quill's default editor padding */
-.rte-paragraph .ql-editor {
-  border: none !important;
-  padding: 0 !important;
-  background: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  line-height: normal !important;
-}
-
-/* Handle placeholder state */
-.rte-paragraph .ql-editor.ql-blank::before {
   padding: 0 !important;
   margin: 0 !important;
-  left: 0 !important;
 }
 
-.rte-paragraph .ql-editor p {
-  margin: 0 !important;
-  padding: 0 !important;
-  line-height: normal !important;
-}
-
-/* Remove focus styles only from the editor */
-.rte-paragraph .ql-container:focus,
-.rte-paragraph .ql-container:focus-within,
-.rte-paragraph .ql-editor:focus,
-.rte-paragraph .ql-editor:focus-within {
+.rte-inline .ql-editor:focus,
+.rte-inline .ql-container:focus,
+.rte-inline .ql-editor:focus-within,
+.rte-inline .ql-container:focus-within {
   outline: none !important;
   box-shadow: none !important;
-  ring: none !important;
   border: none !important;
 }
 
-/* Garantir z-index da bubble do Quill */
-.ql-tooltip {
+.rte-inline .ql-editor.ql-blank::before {
+  color: #94a3b8;
+  font-style: normal;
+  padding: 0 !important;
+}
+
+.rte-inline .ql-tooltip {
   z-index: 10000 !important;
+  min-width: 320px !important;
+  max-width: 100vw !important;
+  width: auto !important;
+  white-space: nowrap !important;
+}
+
+.rte-inline .ql-tooltip .ql-toolbar {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 0.25rem;
 }
 </style> 
