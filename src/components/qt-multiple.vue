@@ -1,6 +1,6 @@
 <template>
-  <div class="main-container" :class="{ 'bg-secondary': mode === MODE_EDICAO }">
-    <div v-if="mode === MODE_EDICAO" class="p-8 min-h-screen">
+  <div class="main-container bg-secondary">
+    <div class="p-8 min-h-screen">
       <draggable
         v-model="questions"
         group="questions"
@@ -51,7 +51,6 @@
                       :max-width="true"
                       :max-height="300"
                       :display-mode="question.displayMode"
-                      :is-print-mode="mode === MODE_IMPRESSAO"
                       @update:displayMode="val => question.displayMode = val"
                       :ref="setImageUploadRef(qIdx)"
                     />
@@ -66,7 +65,6 @@
                       :max-width="32"
                       :max-height="32"
                       :display-mode="question.displayMode"
-                      :is-print-mode="mode === MODE_IMPRESSAO"
                       @update:displayMode="val => question.displayMode = val"
                       :ref="setImageUploadRef(qIdx)"
                       hide-add-button
@@ -127,7 +125,6 @@
                             :max-width="150"
                             :max-height="150"
                             :display-mode="alt.displayMode"
-                            :is-print-mode="mode === MODE_IMPRESSAO"
                             @update:displayMode="val => alt.displayMode = val"
                             :ref="setAltImageUploadRef(qIdx, aIdx)"
                             hide-add-button
@@ -166,83 +163,19 @@
         />
       </div>
     </div>
-    <div v-else class="print-container">
-      <div v-for="(question, qIdx) in questions" :key="question.id" class="flex items-start gap-4 mb-6">
-        <div class="flex flex-col items-center gap-1 mt-6">
-          <span class="text-xl font-regular text-foreground select-none">{{ qIdx + 1 }}</span>
-        </div>
-        <div class="flex-1">
-          <div class="rounded-lg border bg-card p-4 shadow-sm">
-            <div v-if="question.image" class="mb-2" style="width:100%;">
-              <ImageUploadPreview
-                v-model="question.image"
-                :max-width="true"
-                :max-height="300"
-                :display-mode="question.displayMode"
-                :is-print-mode="true"
-                @update:displayMode="val => question.displayMode = val"
-              />
-            </div>
-            <div class="print-question-title">
-              <span v-html="question.text" class="print-question-text" />
-            </div>
-            <div class="print-alternatives mt-2">
-              <div v-for="(alt, aIdx) in question.alternatives" :key="alt.id" class="print-alternative flex items-center mb-1">
-                <ImageUploadPreview
-                  v-if="alt.image"
-                  v-model="alt.image"
-                  :max-width="150"
-                  :max-height="150"
-                  :display-mode="alt.displayMode"
-                  :is-print-mode="true"
-                  @update:displayMode="val => alt.displayMode = val"
-                />
-                <span class="print-radio"></span>
-                <span v-html="alt.text" class="print-alternative-text ml-3" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button
-      class="floating-toggle-btn primary"
-      @click="toggleMode"
-      type="button"
-    >
-      <component :is="mode === MODE_EDICAO ? Printer : Edit" :size="24" />
-    </button>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import draggable from 'vuedraggable'
-import RichTextEditor from './ui/rich-text-editor.vue'
 import RteLarge from './ui/rte-large.vue'
 import RteParagraph from './ui/rte-paragraph.vue'
-import { Trash, GripVertical, X, Plus, Printer, Edit, ListChecks } from 'lucide-vue-next'
+import { Trash, GripVertical, Plus, ListChecks } from 'lucide-vue-next'
 import { Button } from './ui/button'
 import ImageUploadPreview from './ui/image-upload-preview.vue'
 import QuestionTypeCard from './ui/question-type-card.vue'
 import Toolbar from './ui/toolbar.vue'
-
-const MODE_EDICAO = 'edicao'
-const MODE_IMPRESSAO = 'impressao'
-const mode = ref(MODE_EDICAO)
-
-function toggleMode() {
-  mode.value = mode.value === MODE_EDICAO ? MODE_IMPRESSAO : MODE_EDICAO
-  document.body.className = mode.value === MODE_EDICAO ? 'bg-secondary' : ''
-}
-
-onMounted(() => {
-  document.body.className = mode.value === MODE_EDICAO ? 'bg-secondary' : ''
-})
-
-onBeforeUnmount(() => {
-  document.body.className = ''
-})
 
 function newAlternative() {
   return { id: Date.now() + Math.random(), text: '', image: '', displayMode: 'cover' }
@@ -359,79 +292,6 @@ function triggerAltImageUpload(qIdx, aIdx) {
 }
 .floating-toggle-btn:hover {
   box-shadow: 0 4px 16px rgba(0,0,0,0.16);
-}
-.print-container {
-  background: #fff;
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-.print-question {
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-.print-question-title {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  font-size: 1.15rem;
-  line-height: 1.4rem;
-  font-weight: 600;
-}
-.print-question-number {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin-right: 0.5rem;
-}
-.print-alternatives {
-  margin-top: 1rem;
-}
-.print-alternative {
-  font-size: 1rem;
-  min-height: 1.7rem;
-}
-.print-radio {
-  display: inline-block;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 1.5px solid #000000;
-  border-radius: 50%;
-  background: #fff;
-  margin-right: 0.5rem;
-}
-.print-alternative-text {
-  display: inline-block;
-  vertical-align: middle;
-  line-height: 1.3rem;
-}
-@media print {
-  @page {
-    background: #fff;
-    margin: 0;
-  }
-  body {
-    background-color: #fff !important;
-  }
-  html {
-    background-color: #fff !important;
-  }
-  .main-container {
-    background-color: #fff !important;
-  }
-  .print-container {
-    padding: 2rem;
-    background-color: #fff !important;
-  }
-  .print-question-title, .print-question-number, .print-alternative {
-    color: #000 !important;
-  }
-  /* Garantir que os estilos inline sejam preservados */
-  .print-question-text *,
-  .print-alternative-text * {
-    all: revert;
-  }
 }
 .bg-card {
   background-color: #fff;

@@ -29,14 +29,14 @@
         <img
           :src="imageUrl"
           class="w-full h-full"
-          :class="[displayModeClass, { 'cursor-pointer': !isPrintMode }]"
+          :class="[displayModeClass, 'cursor-pointer']"
           :style="imgStyle"
-          @click="!isPrintMode && toggleExpand()"
+          @click="toggleExpand()"
           @load="onImageLoad"
           alt="Imagem da questão ou alternativa"
         />
       </div>
-      <div v-if="!isPrintMode" class="absolute top-2 right-2 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div class="absolute top-2 right-2 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
         <button @click.stop="toggleExpand" class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center" type="button">
           <ExpandIcon v-if="!isContain" :size="16" />
           <ShrinkIcon v-else :size="16" />
@@ -60,7 +60,6 @@ const props = defineProps({
   maxWidth: { type: [Number, Boolean], default: false },
   maxHeight: { type: [Number, Boolean], default: false },
   displayMode: { type: String, default: '' }, // 'cover' ou 'contain'
-  isPrintMode: { type: Boolean, default: false },
   hideAddButton: { type: Boolean, default: false }
 })
 const emit = defineEmits(['update:modelValue', 'update:displayMode'])
