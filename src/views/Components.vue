@@ -521,14 +521,6 @@
         </div>
       </section>
 
-      <!-- Text Field -->
-      <section class="mb-12">
-        <h2 class="text-2xl font-semibold mb-4">text-field</h2>
-        <div class="p-4 border rounded-lg">
-          <TextField />
-        </div>
-      </section>
-
       <!-- RTE Large -->
       <section class="mb-12">
         <h2 class="text-2xl font-semibold mb-4">rte-large</h2>
@@ -567,7 +559,6 @@ import ImageUploadPreview from '@/components/ui/image-upload-preview.vue'
 import QuestionTypeCard from '@/components/ui/question-type-card.vue'
 import RichTextEditor from '@/components/ui/rich-text-editor.vue'
 import RteParagraph from '@/components/ui/rte-paragraph.vue'
-import TextField from '@/components/ui/text-field.vue'
 import RteLarge from '@/components/ui/rte-large.vue'
 
 const activeTab = ref('shadcn')
