@@ -143,9 +143,8 @@
                   size="sm"
                   @click="addAlternative(qIdx)"
                   type="button"
-                  class="add-alt-btn"
                 >
-                  <Plus class="mr-2" />
+                  <Plus />
                   Adicionar alternativa
                 </Button>
               </div>
@@ -355,18 +354,5 @@ function triggerAltImageUpload(qIdx, aIdx) {
   width: max-content;
   transform: translateX(-100%);
   z-index: 200;
-}
-
-/* Botão flutuante de adicionar alternativa */
-.add-alt-btn {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -16px;
-  z-index: 20;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 </style> 

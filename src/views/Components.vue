@@ -128,9 +128,9 @@
                 </Button>
               </div>
               <div class="flex items-center gap-4">
-                <Button size="sm" variant="default"><PlusIcon class="mr-2" />sm</Button>
-                <Button variant="default"><PlusIcon class="mr-2" />default</Button>
-                <Button size="lg" variant="default"><PlusIcon class="mr-2" />lg</Button>
+                <Button size="sm" variant="default"><PlusIcon />sm</Button>
+                <Button variant="default"><PlusIcon />default</Button>
+                <Button size="lg" variant="default"><PlusIcon />lg</Button>
               </div>
             </div>
 
@@ -228,7 +228,7 @@
                   @click="copyToClipboard"
                   class="copy-button"
                 >
-                  <TrashIcon class="mr-2 h-4 w-4" />
+                  <TrashIcon class="h-4 w-4" />
                   Deletar
                 </Button>
                 <Button 
@@ -237,7 +237,7 @@
                   @click="copyToClipboard"
                   class="copy-button"
                 >
-                  <TrashIcon class="mr-2 h-4 w-4" />
+                  <TrashIcon class="h-4 w-4" />
                   Deletar
                 </Button>
                 <Button 
@@ -246,7 +246,7 @@
                   @click="copyToClipboard"
                   class="copy-button"
                 >
-                  <TrashIcon class="mr-2 h-4 w-4" />
+                  <TrashIcon class="h-4 w-4" />
                   Deletar
                 </Button>
                 <Button 
@@ -255,7 +255,7 @@
                   @click="copyToClipboard"
                   class="copy-button"
                 >
-                  <TrashIcon class="mr-2 h-4 w-4" />
+                  <TrashIcon class="h-4 w-4" />
                   Deletar
                 </Button>
                 <Button 
@@ -264,7 +264,7 @@
                   @click="copyToClipboard"
                   class="copy-button"
                 >
-                  <TrashIcon class="mr-2 h-4 w-4" />
+                  <TrashIcon class="h-4 w-4" />
                   Deletar
                 </Button>
                 <Button 
@@ -273,15 +273,15 @@
                   @click="copyToClipboard"
                   class="copy-button"
                 >
-                  <TrashIcon class="mr-2 h-4 w-4" />
+                  <TrashIcon class="h-4 w-4" />
                   Deletar
                 </Button>
               </div>
               <h4 class="font-medium mb-2 mt-6">Button with Icon Sizes</h4>
               <div class="flex gap-4 flex-wrap items-center">
-                <Button size="sm" variant="default"><PlusIcon class="mr-1" />sm</Button>
-                <Button variant="default"><PlusIcon class="mr-2" />default</Button>
-                <Button size="lg" variant="default"><PlusIcon class="mr-2" />lg</Button>
+                <Button size="sm" variant="default"><PlusIcon />sm</Button>
+                <Button variant="default"><PlusIcon />default</Button>
+                <Button size="lg" variant="default"><PlusIcon />lg</Button>
               </div>
             </div>
           </div>
