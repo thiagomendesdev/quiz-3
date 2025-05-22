@@ -10,40 +10,37 @@
       >
         <template #item="{ element: question, index: qIdx }">
           <div class="flex items-start gap-4">
-            <div class="flex flex-col items-center gap-1 mt-6">
-              <span class="text-xl font-regular text-foreground select-none">{{ qIdx + 1 }}</span>
-            </div>
             <div class="flex-1 relative group">
-              <div class="rounded-lg border bg-card p-4 shadow-sm question-block">
-                <Toolbar
-                  :show="hoveredQuestion === qIdx"
-                  class="z-20"
+              <Toolbar
+                :show="hoveredQuestion === qIdx"
+                class="z-20 left-float"
+              >
+                <Button
+                  size="icon-sm" variant="default"
+                  @click="removeQuestion(qIdx)"
+                  title="Remover questão"
+                  type="button"
                 >
-                  <button
-                    class="question-drag h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
-                    title="Arraste para reordenar"
-                    type="button"
-                  >
-                    <GripVertical :size="16" />
-                  </button>
-                  <button
-                    v-if="!question.image"
-                    class="h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
-                    @click="triggerImageUpload(qIdx)"
-                    title="Adicionar imagem à questão"
-                    type="button"
-                  >
-                    <Plus :size="16" />
-                  </button>
-                  <button
-                    class="h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
-                    @click="removeQuestion(qIdx)"
-                    title="Remover questão"
-                    type="button"
-                  >
-                    <Trash :size="16" />
-                  </button>
-                </Toolbar>
+                  <Trash :size="16" />
+                </Button>
+                <Button
+                  v-if="!question.image"
+                  size="icon-sm" variant="default"
+                  @click="triggerImageUpload(qIdx)"
+                  title="Adicionar imagem à questão"
+                  type="button"
+                >
+                  <Plus :size="16" />
+                </Button>
+                <Button size="icon-sm" variant="default"
+                  class="question-drag"
+                  title="Arraste para reordenar"
+                  type="button"
+                >
+                  <GripVertical :size="16" />
+                </Button>
+              </Toolbar>
+              <div class="rounded-lg border bg-card p-4 shadow-sm question-block relative">
                 <div class="mb-4"
                   @mouseenter="hoveredQuestion = qIdx"
                   @mouseleave="hoveredQuestion = null"
@@ -96,32 +93,32 @@
                     >
                       <Toolbar
                         :show="hoveredAlt === `${qIdx}-${aIdx}`"
-                        class="z-20"
+                        class="z-20 left-float-alt"
                       >
-                        <button
-                          class="alt-drag h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
-                          title="Arraste para reordenar"
+                        <Button
+                          size="icon-sm" variant="default"
+                          @click="removeAlternative(qIdx, aIdx)"
+                          title="Remover alternativa"
                           type="button"
                         >
-                          <GripVertical :size="16" />
-                        </button>
-                        <button
+                          <Trash :size="16" />
+                        </Button>
+                        <Button
                           v-if="!alt.image"
-                          class="h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
+                          size="icon-sm" variant="default"
                           @click="triggerAltImageUpload(qIdx, aIdx)"
                           title="Adicionar imagem à alternativa"
                           type="button"
                         >
                           <Plus :size="16" />
-                        </button>
-                        <button
-                          class="alt-remove h-8 w-8 rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center"
-                          @click="removeAlternative(qIdx, aIdx)"
-                          title="Remover alternativa"
+                        </Button>
+                        <Button size="icon-sm" variant="default"
+                          class="alt-drag"
+                          title="Arraste para reordenar"
                           type="button"
                         >
-                          <X :size="16" />
-                        </button>
+                          <GripVertical :size="16" />
+                        </Button>
                       </Toolbar>
                       <div class="flex-1">
                         <div class="flex items-center gap-2">
@@ -480,4 +477,25 @@ function triggerAltImageUpload(qIdx, aIdx) {
   opacity: 1 !important;
 }
 
+.left-float {
+  position: absolute;
+  left: 1.5rem;
+  top: 1.4rem;
+  display: flex;
+  width: max-content;
+  min-width: unset;
+  max-width: max-content;
+  transform: translateX(-100%);
+  z-index: 200;
+}
+
+.left-float-alt {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.33rem;
+  display: flex;
+  width: max-content;
+  transform: translateX(-100%);
+  z-index: 200;
+}
 </style> 

@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="visible" class="toolbar-float" @mouseenter="hovering = true" @mouseleave="hovering = false">
+    <div v-if="visible" class="toolbar-float bg-foreground text-foreground" @mouseenter="hovering = true" @mouseleave="hovering = false">
       <slot />
     </div>
   </transition>
