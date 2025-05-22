@@ -113,6 +113,12 @@ onBeforeUnmount(() => {
   box-shadow: none !important;
   padding: 0 !important;
   margin: 0 !important;
+  font-size: 1rem !important; /* text-base */
+  line-height: 1.5rem !important; /* leading-normal */
+  font-family: inherit !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  color: hsl(var(--foreground)) !important;
 }
 
 .rte-inline .ql-editor:focus,
@@ -128,6 +134,8 @@ onBeforeUnmount(() => {
   color: hsl(var(--muted-foreground)) !important;
   font-style: normal;
   padding: 0 !important;
+  font-size: 1rem !important; /* text-base */
+  line-height: 1.5rem !important; /* leading-normal */
 }
 
 .rte-inline .ql-tooltip {

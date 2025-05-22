@@ -126,7 +126,7 @@ onBeforeUnmount(() => {
   font-size: 1.125rem !important; /* text-lg */
   line-height: 1.75rem !important; /* text-lg */
   font-family: inherit !important;
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   letter-spacing: 0 !important;
   color: #0f172a !important; /* text-slate-900 */
   border: none !important;
