@@ -144,6 +144,7 @@ onBeforeUnmount(() => {
   max-width: 100vw !important;
   width: auto !important;
   white-space: nowrap !important;
+  background-color: hsl(var(--foreground));
 }
 
 .rte-inline .ql-tooltip .ql-toolbar {

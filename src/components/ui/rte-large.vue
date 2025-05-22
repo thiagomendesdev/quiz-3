@@ -117,14 +117,14 @@ onBeforeUnmount(() => {
 <style>
 .rte-large {
   font-size: 1.125rem !important; /* text-lg */
-  line-height: 1.75rem !important; /* text-lg */
+  line-height: 1.45rem !important;
 }
 
 .rte-large,
 .rte-large .ql-container,
 .rte-large .ql-editor {
   font-size: 1.125rem !important; /* text-lg */
-  line-height: 1.75rem !important; /* text-lg */
+  line-height: 1.45rem !important;
   font-family: inherit !important;
   font-weight: 600 !important;
   letter-spacing: 0 !important;
@@ -147,7 +147,7 @@ onBeforeUnmount(() => {
 }
 
 .rte-large .ql-editor {
-  line-height: 1.75rem !important;
+  line-height: 1.45rem !important;
   font-size: 1.125rem !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -156,14 +156,15 @@ onBeforeUnmount(() => {
 .rte-large .ql-editor p {
   margin: 0 !important;
   padding: 0 !important;
-  min-height: 1.75rem !important;
+  min-height: 1.6rem !important;
+  line-height: 1.6rem !important;
 }
 
 .rte-large .ql-editor.ql-blank::before {
   color: hsl(var(--muted-foreground)) !important;
   font-style: normal !important;
   font-size: 1.125rem !important;
-  line-height: 1.75rem !important;
+  line-height: 1.45rem !important;
   left: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
@@ -174,7 +175,8 @@ onBeforeUnmount(() => {
 
 .rte-large .ql-editor.ql-blank > p {
   display: block !important;
-  min-height: 1.75rem !important;
+  min-height: 1.6rem !important;
+  line-height: 1.6rem !important;
 }
 
 .rte-large .ql-editor.ql-blank > p > br {
@@ -191,6 +193,7 @@ onBeforeUnmount(() => {
   max-width: 100vw !important;
   width: auto !important;
   white-space: nowrap !important;
+  background-color: hsl(var(--foreground));
 }
 
 .rte-large .ql-tooltip .ql-toolbar {
