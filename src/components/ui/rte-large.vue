@@ -120,6 +120,7 @@ onBeforeUnmount(() => {
 
 <style>
 .rte-large {
+  width: 100% !important;
   font-size: 1.125rem !important; /* text-lg */
   line-height: 1.45rem !important;
 }
@@ -127,6 +128,7 @@ onBeforeUnmount(() => {
 .rte-large,
 .rte-large .ql-container,
 .rte-large .ql-editor {
+  width: 100% !important;
   font-size: 1.125rem !important; /* text-lg */
   line-height: 1.45rem !important;
   font-family: inherit !important;
@@ -155,11 +157,15 @@ onBeforeUnmount(() => {
   font-size: 1.125rem !important;
   margin: 0 !important;
   padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .rte-large .ql-editor p {
   margin: 0 !important;
   padding: 0 !important;
+  line-height: 1.45rem !important;
+  font-size: 1.125rem !important;
 }
 
 .rte-large .ql-editor.ql-blank::before {
@@ -167,12 +173,18 @@ onBeforeUnmount(() => {
   font-style: normal !important;
   font-size: 1.125rem !important;
   line-height: 1.45rem !important;
+  font-family: inherit !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  vertical-align: inherit !important;
   left: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
   opacity: 1 !important;
   pointer-events: none !important;
-  display: block !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100%;
 }
 
 .rte-large .ql-editor.ql-blank > p {
