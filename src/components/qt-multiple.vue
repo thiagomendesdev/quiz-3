@@ -56,12 +56,17 @@
                           <GripVertical :size="16" />
                         </Button>
                       </Toolbar>
-                      <RteLarge
-                        v-model="question.text"
-                        placeholder="Digite aqui a questão"
-                        @focus="focusedQuestion = qIdx"
-                        @blur="focusedQuestion = null"
-                      />
+                      <div class="flex items-center gap-2">
+                        <div class="p-1">
+                          <span class="inline-block w-6 text-right text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
+                        </div>
+                        <RteLarge
+                          v-model="question.text"
+                          placeholder="Digite aqui a questão"
+                          @focus="focusedQuestion = qIdx"
+                          @blur="focusedQuestion = null"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div v-else class="flex items-center gap-0 relative"
@@ -136,12 +141,17 @@
                           <GripVertical :size="16" />
                         </Button>
                       </Toolbar>
-                      <RteLarge
-                        v-model="question.text"
-                        placeholder="Digite aqui a questão"
-                        @focus="focusedQuestion = qIdx"
-                        @blur="focusedQuestion = null"
-                      />
+                      <div class="flex items-center gap-2">
+                        <div class="p-1">
+                          <span class="inline-block w-6 text-right text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
+                        </div>
+                        <RteLarge
+                          v-model="question.text"
+                          placeholder="Digite aqui a questão"
+                          @focus="focusedQuestion = qIdx"
+                          @blur="focusedQuestion = null"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -474,6 +484,6 @@ function onQuestionMouseLeave(qIdx) {
 }
 
 .question-block {
-  padding: 24px !important;
+  padding: 20px !important;
 }
 </style> 
