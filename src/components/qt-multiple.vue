@@ -447,7 +447,7 @@ function onQuestionMouseLeave(qIdx) {
 .add-alt-float-btn-wrapper {
   position: absolute;
   left: 50%;
-  bottom: -32px;
+  bottom: -44px;
   transform: translateX(-50%);
   z-index: 30;
   pointer-events: auto;
@@ -460,15 +460,20 @@ function onQuestionMouseLeave(qIdx) {
   margin-right: 8px;
 }
 
-/* Transição suave para bg-secondary */
+/* Focus state para questão e alternativas */
 .relative.rounded-md.bg-secondary,
 .flex-1.min-w-0.rounded-md.bg-secondary,
 .flex.items-center.gap-1.group.relative.alt-block.rounded-md.bg-secondary {
+  background-color: hsl(var(--secondary)) !important;
   transition: background 100ms ease-out;
 }
 
 /* Transição suave para toolbars */
 .toolbar-float {
   transition: opacity 100ms ease-out;
+}
+
+.question-block {
+  padding: 24px !important;
 }
 </style> 
