@@ -11,7 +11,9 @@
         <template #item="{ element: question, index: qIdx }">
           <div class="flex items-start gap-4">
             <div class="flex-1 relative group">
-              <div class="rounded-lg border bg-card p-4 shadow-sm question-block relative">
+              <div class="rounded-lg border bg-card p-4 shadow-sm question-block relative"
+                   @mouseenter="hoveredCard = qIdx"
+                   @mouseleave="hoveredCard = null">
                 <div class="mb-4">
                   <div v-if="question.image" class="flex flex-col gap-2">
                     <ImageUploadPreview
@@ -107,77 +109,84 @@
                     </div>
                   </div>
                 </div>
-                <draggable
-                  v-model="question.alternatives"
-                  group="alternatives"
-                  item-key="id"
-                  handle=".alt-drag"
-                  class="space-y-1"
-                >
-                  <template #item="{ element: alt, index: aIdx }">
-                    <div class="flex items-center gap-1 group relative alt-block"
-                      @mouseenter="hoveredAlt = `${qIdx}-${aIdx}`"
-                      @mouseleave="hoveredAlt = null"
-                    >
-                      <Toolbar
-                        :show="hoveredAlt === `${qIdx}-${aIdx}`"
-                        class="z-20 left-float-alt"
+                <div class="relative">
+                  <draggable
+                    v-model="question.alternatives"
+                    group="alternatives"
+                    item-key="id"
+                    handle=".alt-drag"
+                    class="space-y-1"
+                  >
+                    <template #item="{ element: alt, index: aIdx }">
+                      <div class="flex items-center gap-1 group relative alt-block"
+                        @mouseenter="hoveredAlt = `${qIdx}-${aIdx}`"
+                        @mouseleave="hoveredAlt = null"
                       >
-                        <Button
-                          size="icon-sm" variant="default"
-                          @click="removeAlternative(qIdx, aIdx)"
-                          title="Remover alternativa"
-                          type="button"
+                        <Toolbar
+                          :show="hoveredAlt === `${qIdx}-${aIdx}`"
+                          class="z-20 left-float-alt"
                         >
-                          <Trash :size="16" />
-                        </Button>
-                        <Button
-                          size="icon-sm" variant="default"
-                          @click="triggerAltImageUpload(qIdx, aIdx)"
-                          title="Adicionar imagem à alternativa"
-                          type="button"
-                        >
-                          <ImagePlusIcon :size="16" />
-                        </Button>
-                        <Button size="icon-sm" variant="default"
-                          class="alt-drag"
-                          title="Arraste para reordenar"
-                          type="button"
-                        >
-                          <GripVertical :size="16" />
-                        </Button>
-                      </Toolbar>
-                      <div class="flex-1">
-                        <div class="flex items-center gap-2">
-                          <ImageUploadPreview
-                            v-model="alt.image"
-                            :max-width="150"
-                            :max-height="150"
-                            :display-mode="alt.displayMode"
-                            @update:displayMode="val => alt.displayMode = val"
-                            :ref="setAltImageUploadRef(qIdx, aIdx)"
-                            hide-add-button
-                          />
-                          <div class="flex-1 min-w-0">
-                            <RteParagraph
-                              v-model="alt.text"
-                              :placeholder="`Alternativa ${aIdx + 1}`"
+                          <Button
+                            size="icon-sm" variant="default"
+                            @click="removeAlternative(qIdx, aIdx)"
+                            title="Remover alternativa"
+                            type="button"
+                          >
+                            <Trash :size="16" />
+                          </Button>
+                          <Button
+                            size="icon-sm" variant="default"
+                            @click="triggerAltImageUpload(qIdx, aIdx)"
+                            title="Adicionar imagem à alternativa"
+                            type="button"
+                          >
+                            <ImagePlusIcon :size="16" />
+                          </Button>
+                          <Button size="icon-sm" variant="default"
+                            class="alt-drag"
+                            title="Arraste para reordenar"
+                            type="button"
+                          >
+                            <GripVertical :size="16" />
+                          </Button>
+                        </Toolbar>
+                        <div class="flex-1">
+                          <div class="flex items-center gap-2">
+                            <ImageUploadPreview
+                              v-model="alt.image"
+                              :max-width="150"
+                              :max-height="150"
+                              :display-mode="alt.displayMode"
+                              @update:displayMode="val => alt.displayMode = val"
+                              :ref="setAltImageUploadRef(qIdx, aIdx)"
+                              hide-add-button
                             />
+                            <div class="flex-1 min-w-0">
+                              <RteParagraph
+                                v-model="alt.text"
+                                :placeholder="`Alternativa ${aIdx + 1}`"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </template>
-                </draggable>
-                <Button
-                  variant="default"
-                  size="sm"
-                  @click="addAlternative(qIdx)"
-                  type="button"
-                >
-                  <Plus />
-                  Adicionar alternativa
-                </Button>
+                    </template>
+                  </draggable>
+                  <div
+                    class="add-alt-float-btn-wrapper"
+                    v-show="hoveredCard === qIdx"
+                  >
+                    <Button
+                      variant="default"
+                      size="sm"
+                      @click="addAlternative(qIdx)"
+                      type="button"
+                    >
+                      <Plus />
+                      Adicionar alternativa
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -249,6 +258,7 @@ function setCorrect(qIdx, aIdx) {
 }
 
 const hoveredQuestion = ref(null)
+const hoveredCard = ref(null)
 const hoveredAlt = ref(null)
 const imageUploadRefs = ref([])
 const altImageUploadRefs = ref({})
@@ -367,7 +377,7 @@ function triggerAltImageUpload(qIdx, aIdx) {
 
 .left-float {
   position: absolute;
-  left: 1.5rem;
+  left: 0.5rem;
   top: 50%;
   display: flex;
   width: max-content;
@@ -385,5 +395,14 @@ function triggerAltImageUpload(qIdx, aIdx) {
   width: max-content;
   transform: translate(-100%, -50%);
   z-index: 200;
+}
+
+.add-alt-float-btn-wrapper {
+  position: absolute;
+  left: 50%;
+  bottom: -32px;
+  transform: translateX(-50%);
+  z-index: 30;
+  pointer-events: auto;
 }
 </style> 
