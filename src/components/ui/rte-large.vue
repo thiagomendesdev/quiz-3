@@ -153,38 +153,37 @@ onBeforeUnmount(() => {
 }
 
 .rte-large .ql-editor {
+  min-height: 1.6rem !important;
   line-height: 1.45rem !important;
   font-size: 1.125rem !important;
   margin: 0 !important;
   padding: 0 !important;
-  /* display: flex !important; */
-  /* align-items: center !important; */
 }
 
 .rte-large .ql-editor p {
-  margin: 0 !important;
-  padding: 0 !important;
+  min-height: 1.6rem !important;
   line-height: 1.45rem !important;
   font-size: 1.125rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .rte-large .ql-editor.ql-blank::before {
+  display: inline-block !important;
+  vertical-align: top !important;
+  min-height: 1.6rem !important;
+  line-height: 1.45rem !important;
+  font-size: 1.125rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
   color: hsl(var(--muted-foreground)) !important;
   font-style: normal !important;
-  font-size: 1.125rem !important;
-  line-height: 1.45rem !important;
   font-family: inherit !important;
   font-weight: 500 !important;
   letter-spacing: 0 !important;
-  vertical-align: inherit !important;
-  left: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
   opacity: 1 !important;
   pointer-events: none !important;
-  display: flex !important;
-  align-items: center !important;
-  width: 100%;
 }
 
 .rte-large .ql-editor.ql-blank > p {

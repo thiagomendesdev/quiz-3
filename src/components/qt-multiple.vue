@@ -56,7 +56,7 @@
                           <GripVertical :size="16" />
                         </Button>
                       </Toolbar>
-                      <div class="flex items-center gap-1">
+                      <div class="flex items-start gap-1">
                         <div>
                           <span class="inline-block w-6 text-left text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
                         </div>
@@ -141,7 +141,7 @@
                           <GripVertical :size="16" />
                         </Button>
                       </Toolbar>
-                      <div class="flex items-center gap-1">
+                      <div class="flex items-start gap-1">
                         <div>
                           <span class="inline-block w-6 text-left text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
                         </div>
