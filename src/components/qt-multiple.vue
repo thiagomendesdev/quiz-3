@@ -124,7 +124,7 @@
                     group="alternatives"
                     item-key="id"
                     handle=".alt-drag"
-                    class="space-y-1"
+                    class="space-y-0"
                   >
                     <template #item="{ element: alt, index: aIdx }">
                       <div class="flex items-center gap-1 group relative alt-block rounded-md"
@@ -170,6 +170,7 @@
                               @update:displayMode="val => alt.displayMode = val"
                               :ref="setAltImageUploadRef(qIdx, aIdx)"
                               hide-add-button
+                              class="alt-image-preview"
                             />
                             <Circle :size="18" class="text-muted-foreground" />
                             <div class="flex-1 min-w-0">
@@ -419,5 +420,24 @@ function triggerAltImageUpload(qIdx, aIdx) {
   transform: translateX(-50%);
   z-index: 30;
   pointer-events: auto;
+}
+
+.alt-image-preview {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-left: 2px;
+  margin-right: 8px;
+}
+
+/* Transição suave para bg-secondary */
+.relative.rounded-md.bg-secondary,
+.flex-1.min-w-0.rounded-md.bg-secondary,
+.flex.items-center.gap-1.group.relative.alt-block.rounded-md.bg-secondary {
+  transition: background 100ms ease-out;
+}
+
+/* Transição suave para toolbars */
+.toolbar-float {
+  transition: opacity 100ms ease-out;
 }
 </style> 
