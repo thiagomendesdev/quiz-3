@@ -24,7 +24,8 @@
                       @update:displayMode="val => question.displayMode = val"
                       :ref="setImageUploadRef(qIdx)"
                     />
-                    <div class="relative"
+                    <div class="relative rounded-md"
+                         :class="{'bg-secondary': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
                          @mouseenter="hoveredQuestion = qIdx"
                          @mouseleave="hoveredQuestion = null">
                       <Toolbar
@@ -58,10 +59,13 @@
                       <RteLarge
                         v-model="question.text"
                         placeholder="Digite aqui a questão"
+                        @focus="focusedQuestion = qIdx"
+                        @blur="focusedQuestion = null"
                       />
                     </div>
                   </div>
                   <div v-else class="flex items-center gap-2 relative"
+                       :class="{'bg-secondary': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
                        @mouseenter="hoveredQuestion = qIdx"
                        @mouseleave="hoveredQuestion = null">
                     <Toolbar
@@ -101,10 +105,15 @@
                       :ref="setImageUploadRef(qIdx)"
                       hide-add-button
                     />
-                    <div class="flex-1 min-w-0">
+                    <div class="flex-1 min-w-0 rounded-md"
+                         :class="{'bg-secondary': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
+                         @mouseenter="hoveredQuestion = qIdx"
+                         @mouseleave="hoveredQuestion = null">
                       <RteLarge
                         v-model="question.text"
                         placeholder="Digite aqui a questão"
+                        @focus="focusedQuestion = qIdx"
+                        @blur="focusedQuestion = null"
                       />
                     </div>
                   </div>
@@ -118,7 +127,8 @@
                     class="space-y-1"
                   >
                     <template #item="{ element: alt, index: aIdx }">
-                      <div class="flex items-center gap-1 group relative alt-block"
+                      <div class="flex items-center gap-1 group relative alt-block rounded-md"
+                        :class="{'bg-secondary': hoveredAlt === `${qIdx}-${aIdx}` || focusedAlt === `${qIdx}-${aIdx}`}"
                         @mouseenter="hoveredAlt = `${qIdx}-${aIdx}`"
                         @mouseleave="hoveredAlt = null"
                       >
@@ -161,10 +171,13 @@
                               :ref="setAltImageUploadRef(qIdx, aIdx)"
                               hide-add-button
                             />
+                            <Circle :size="18" class="text-muted-foreground" />
                             <div class="flex-1 min-w-0">
                               <RteParagraph
                                 v-model="alt.text"
                                 :placeholder="`Alternativa ${aIdx + 1}`"
+                                @focus="focusedAlt = `${qIdx}-${aIdx}`"
+                                @blur="focusedAlt = null"
                               />
                             </div>
                           </div>
@@ -208,7 +221,7 @@ import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import draggable from 'vuedraggable'
 import RteLarge from './ui/rte-large.vue'
 import RteParagraph from './ui/rte-paragraph.vue'
-import { Trash, GripVertical, Plus, ListChecks, ImagePlus as ImagePlusIcon } from 'lucide-vue-next'
+import { Trash, GripVertical, Plus, ListChecks, ImagePlus as ImagePlusIcon, Circle } from 'lucide-vue-next'
 import { Button } from './ui/button'
 import ImageUploadPreview from './ui/image-upload-preview.vue'
 import QuestionTypeCard from './ui/question-type-card.vue'
@@ -258,8 +271,10 @@ function setCorrect(qIdx, aIdx) {
 }
 
 const hoveredQuestion = ref(null)
-const hoveredCard = ref(null)
+const focusedQuestion = ref(null)
 const hoveredAlt = ref(null)
+const focusedAlt = ref(null)
+const hoveredCard = ref(null)
 const imageUploadRefs = ref([])
 const altImageUploadRefs = ref({})
 
@@ -377,7 +392,7 @@ function triggerAltImageUpload(qIdx, aIdx) {
 
 .left-float {
   position: absolute;
-  left: 0.5rem;
+  left: 0.1rem;
   top: 50%;
   display: flex;
   width: max-content;
@@ -389,7 +404,7 @@ function triggerAltImageUpload(qIdx, aIdx) {
 
 .left-float-alt {
   position: absolute;
-  left: 0.5rem;
+  left: 0.1rem;
   top: 50%;
   display: flex;
   width: max-content;

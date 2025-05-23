@@ -29,7 +29,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'focus', 'blur'])
 
 const editor = ref(null)
 let quill = null
@@ -86,6 +86,10 @@ onMounted(() => {
     html = html.replace(/<li[^>]*>.*?<\/li>/gs, '')
     emit('update:modelValue', html)
   })
+
+  // Emitir eventos de focus/blur
+  quill.root.addEventListener('focus', () => emit('focus'))
+  quill.root.addEventListener('blur', () => emit('blur'))
 })
 
 // Watch for external value changes
