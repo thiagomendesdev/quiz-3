@@ -199,16 +199,18 @@
                         </Toolbar>
                         <div class="flex-1">
                           <div class="flex items-center gap-2">
-                            <ImageUploadPreview
-                              v-model="alt.image"
-                              :max-width="150"
-                              :max-height="150"
-                              :display-mode="alt.displayMode"
-                              @update:displayMode="val => alt.displayMode = val"
-                              :ref="setAltImageUploadRef(qIdx, aIdx)"
-                              hide-add-button
-                              class="alt-image-preview"
-                            />
+                            <div v-if="alt.image" class="flex items-center alt-image-preview">
+                              <ImageUploadPreview
+                                v-model="alt.image"
+                                :max-width="150"
+                                :max-height="150"
+                                :display-mode="alt.displayMode"
+                                @update:displayMode="val => alt.displayMode = val"
+                                :ref="setAltImageUploadRef(qIdx, aIdx)"
+                                hide-add-button
+                                class="alt-image-preview"
+                              />
+                            </div>
                             <Circle :size="18" class="text-muted-foreground" />
                             <div class="flex-1 min-w-0">
                               <RteParagraph
