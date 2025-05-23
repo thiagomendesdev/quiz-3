@@ -166,6 +166,7 @@ function removeImage() {
   emit('update:modelValue', '')
   emit('update:displayMode', 'cover')
   dominantColor.value = '#f3f3f3'
+  if (fileInput.value) fileInput.value.value = ''
 }
 
 watch(() => props.displayMode, (val) => {
