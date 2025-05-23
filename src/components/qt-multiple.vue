@@ -110,7 +110,7 @@
                       :ref="setImageUploadRef(qIdx)"
                       hide-add-button
                     />
-                    <div class="flex-1 min-w-0 relative"
+                    <div class="flex-1 min-w-0 relative pl-2"
                          @mouseenter="hoveredQuestion = qIdx"
                          @mouseleave="hoveredQuestion = null">
                       <Toolbar
@@ -207,7 +207,7 @@
                               @update:displayMode="val => alt.displayMode = val"
                               :ref="setAltImageUploadRef(qIdx, aIdx)"
                               hide-add-button
-                              class="alt-image-preview"
+                              :class="alt.image ? 'alt-image-preview' : ''"
                             />
                             <Circle :size="18" class="text-muted-foreground" />
                             <div class="flex-1 min-w-0">
