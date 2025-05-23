@@ -56,9 +56,9 @@
                           <GripVertical :size="16" />
                         </Button>
                       </Toolbar>
-                      <div class="flex items-center gap-2">
-                        <div class="p-1">
-                          <span class="inline-block w-6 text-right text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
+                      <div class="flex items-center gap-1">
+                        <div>
+                          <span class="inline-block w-6 text-left text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
                         </div>
                         <RteLarge
                           v-model="question.text"
@@ -141,9 +141,9 @@
                           <GripVertical :size="16" />
                         </Button>
                       </Toolbar>
-                      <div class="flex items-center gap-2">
-                        <div class="p-1">
-                          <span class="inline-block w-6 text-right text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
+                      <div class="flex items-center gap-1">
+                        <div>
+                          <span class="inline-block w-6 text-left text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
                         </div>
                         <RteLarge
                           v-model="question.text"
@@ -199,18 +199,16 @@
                         </Toolbar>
                         <div class="flex-1">
                           <div class="flex items-center gap-2">
-                            <div v-if="alt.image" class="flex items-center alt-image-preview">
-                              <ImageUploadPreview
-                                v-model="alt.image"
-                                :max-width="150"
-                                :max-height="150"
-                                :display-mode="alt.displayMode"
-                                @update:displayMode="val => alt.displayMode = val"
-                                :ref="setAltImageUploadRef(qIdx, aIdx)"
-                                hide-add-button
-                                class="alt-image-preview"
-                              />
-                            </div>
+                            <ImageUploadPreview
+                              v-model="alt.image"
+                              :max-width="150"
+                              :max-height="150"
+                              :display-mode="alt.displayMode"
+                              @update:displayMode="val => alt.displayMode = val"
+                              :ref="setAltImageUploadRef(qIdx, aIdx)"
+                              hide-add-button
+                              class="alt-image-preview"
+                            />
                             <Circle :size="18" class="text-muted-foreground" />
                             <div class="flex-1 min-w-0">
                               <RteParagraph

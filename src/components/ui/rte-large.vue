@@ -157,8 +157,8 @@ onBeforeUnmount(() => {
   font-size: 1.125rem !important;
   margin: 0 !important;
   padding: 0 !important;
-  display: flex !important;
-  align-items: center !important;
+  /* display: flex !important; */
+  /* align-items: center !important; */
 }
 
 .rte-large .ql-editor p {
