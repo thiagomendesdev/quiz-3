@@ -64,7 +64,7 @@
                       />
                     </div>
                   </div>
-                  <div v-else class="flex items-center gap-2 relative"
+                  <div v-else class="flex items-center gap-0 relative"
                        :class="{'bg-secondary': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
                        @mouseenter="hoveredQuestion = qIdx"
                        @mouseleave="hoveredQuestion = null">
@@ -109,6 +109,34 @@
                          :class="{'bg-secondary': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
                          @mouseenter="hoveredQuestion = qIdx"
                          @mouseleave="hoveredQuestion = null">
+                      <Toolbar
+                        :show="hoveredQuestion === qIdx"
+                        class="z-20 left-float"
+                      >
+                        <Button
+                          size="icon-sm" variant="default"
+                          @click="removeQuestion(qIdx)"
+                          title="Remover questão"
+                          type="button"
+                        >
+                          <Trash :size="16" />
+                        </Button>
+                        <Button
+                          size="icon-sm" variant="default"
+                          @click="triggerImageUpload(qIdx)"
+                          title="Adicionar imagem à questão"
+                          type="button"
+                        >
+                          <ImagePlusIcon :size="16" />
+                        </Button>
+                        <Button size="icon-sm" variant="default"
+                          class="question-drag"
+                          title="Arraste para reordenar"
+                          type="button"
+                        >
+                          <GripVertical :size="16" />
+                        </Button>
+                      </Toolbar>
                       <RteLarge
                         v-model="question.text"
                         placeholder="Digite aqui a questão"
@@ -308,6 +336,10 @@ function triggerAltImageUpload(qIdx, aIdx) {
       if (input) input.click()
     }
   })
+}
+
+function onQuestionMouseLeave(qIdx) {
+  if (focusedQuestion.value !== qIdx) hoveredQuestion.value = null
 }
 </script>
 

@@ -28,13 +28,13 @@ watch(hovering, (val) => {
 <style scoped>
 .toolbar-float {
   position: absolute;
-  top: 0.15rem;
-  right: 0.5rem;
+  top: 0.2rem;
+  right: 0.2rem;
   display: flex;
-  gap: 0.15rem;
+  gap: 0.1rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-  padding: 0.15rem 0.15rem;
+  padding: 0.1rem 0.1rem;
   z-index: 10;
   align-items: center;
 }
