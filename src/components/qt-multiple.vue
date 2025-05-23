@@ -14,7 +14,7 @@
               <div class="rounded-lg border bg-card p-4 shadow-sm question-block relative"
                    @mouseenter="hoveredCard = qIdx"
                    @mouseleave="hoveredCard = null">
-                <div class="mb-4">
+                <div class="mb-1">
                   <div v-if="question.image" class="flex flex-col gap-2">
                     <ImageUploadPreview
                       v-model="question.image"
@@ -24,8 +24,8 @@
                       @update:displayMode="val => question.displayMode = val"
                       :ref="setImageUploadRef(qIdx)"
                     />
-                    <div class="relative rounded-md"
-                         :class="{'bg-secondary': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
+                    <div class="relative"
+                         :class="{'bg-secondary rounded-md': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
                          @mouseenter="hoveredQuestion = qIdx"
                          @mouseleave="hoveredQuestion = null">
                       <Toolbar
@@ -65,7 +65,7 @@
                     </div>
                   </div>
                   <div v-else class="flex items-center gap-0 relative"
-                       :class="{'bg-secondary': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
+                       :class="{'bg-secondary rounded-md': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
                        @mouseenter="hoveredQuestion = qIdx"
                        @mouseleave="hoveredQuestion = null">
                     <Toolbar
@@ -105,8 +105,7 @@
                       :ref="setImageUploadRef(qIdx)"
                       hide-add-button
                     />
-                    <div class="flex-1 min-w-0 rounded-md"
-                         :class="{'bg-secondary': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
+                    <div class="flex-1 min-w-0 relative"
                          @mouseenter="hoveredQuestion = qIdx"
                          @mouseleave="hoveredQuestion = null">
                       <Toolbar
