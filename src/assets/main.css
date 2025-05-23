@@ -93,4 +93,23 @@
 /* Estilo global para ícones do Lucide */
 [data-lucide] {
   stroke-width: 1px !important;
+}
+
+@media print {
+  /* Esconde todos os botões baseados no componente Button */
+  button, .Button, .add-alt-float-btn-wrapper, .toolbar-float, .question-type-card, [type="button"] {
+    display: none !important;
+  }
+  /* Esconde o card de adicionar questão */
+  .flex.justify-center.mt-8 {
+    display: none !important;
+  }
+  /* Esconde toolbars flutuantes */
+  .toolbar-float {
+    display: none !important;
+  }
+  /* Esconde botões de upload de imagem */
+  .btn-remove {
+    display: none !important;
+  }
 } 
