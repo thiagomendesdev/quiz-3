@@ -58,7 +58,7 @@
                       </Toolbar>
                       <div class="flex items-start gap-1">
                         <div>
-                          <span class="inline-block w-6 text-left text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
+                          <span class="inline-block w-6 text-left text-lg font-medium text-primary select-none" style="padding-top: 1px;">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
                         </div>
                         <RteLarge
                           v-model="question.text"
@@ -143,7 +143,7 @@
                       </Toolbar>
                       <div class="flex items-start gap-1">
                         <div>
-                          <span class="inline-block w-6 text-left text-lg font-medium text-primary select-none">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
+                          <span class="inline-block w-6 text-left text-lg font-medium text-primary select-none" style="padding-top: 1px;">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
                         </div>
                         <RteLarge
                           v-model="question.text"
@@ -457,7 +457,7 @@ function onQuestionMouseLeave(qIdx) {
 .add-alt-float-btn-wrapper {
   position: absolute;
   left: 50%;
-  bottom: -44px;
+  bottom: -36px;
   transform: translateX(-50%);
   z-index: 30;
   pointer-events: auto;
