@@ -1,7 +1,7 @@
 <template>
   <div :class="containerClass" :style="containerStyle">
     <button
-      v-if="!imageUrl && !hideAddButton"
+      v-if="!hideAddButton && !imageUrl"
       class="h-10 w-10 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
       type="button"
       @click="triggerFileInput"
@@ -19,7 +19,11 @@
       @change="onFileChange"
       :disabled="isLoading"
     />
-    <div v-if="imageUrl" class="relative flex-shrink-0" :style="imageBoxStyle">
+    <div v-if="imageUrl" 
+         class="relative flex-shrink-0"
+         :style="imageBoxStyle"
+         :class="{ 'alt-image-preview': isAlt && imageUrl }"
+    >
       <div 
         :class="['rounded-md w-full h-full overflow-hidden relative', displayModeClass]" 
         :style="{
@@ -65,8 +69,9 @@ const fileInput = ref(null)
 const isLoading = ref(false)
 const expanded = ref(false)
 const dominantColor = ref('#f3f3f3')
+const localPreviewUrl = ref(null)
 
-const imageUrl = computed(() => props.modelValue)
+const imageUrl = computed(() => localPreviewUrl.value || props.modelValue)
 
 const isAlt = computed(() => props.maxWidth === 150 && props.maxHeight === 150)
 
@@ -108,6 +113,8 @@ const imgStyle = computed(() => {
   return style
 })
 
+const hasImage = computed(() => !!(localPreviewUrl.value || props.modelValue))
+
 async function calculateDominantColor(imgUrl) {
   if (!imgUrl) return
   try {
@@ -148,10 +155,20 @@ function triggerFileInput() {
 async function onFileChange(e) {
   const file = e.target.files[0]
   if (!file) return
+  // Cria preview local
+  if (localPreviewUrl.value) {
+    URL.revokeObjectURL(localPreviewUrl.value)
+  }
+  localPreviewUrl.value = URL.createObjectURL(file)
   isLoading.value = true
   try {
     const url = await uploadToImageKit(file)
     emit('update:modelValue', url)
+    // Limpa preview local após upload
+    if (localPreviewUrl.value) {
+      URL.revokeObjectURL(localPreviewUrl.value)
+      localPreviewUrl.value = null
+    }
   } finally {
     isLoading.value = false
   }
@@ -167,12 +184,18 @@ function removeImage() {
   emit('update:displayMode', 'cover')
   dominantColor.value = '#f3f3f3'
   if (fileInput.value) fileInput.value.value = ''
+  if (localPreviewUrl.value) {
+    URL.revokeObjectURL(localPreviewUrl.value)
+    localPreviewUrl.value = null
+  }
 }
 
 watch(() => props.displayMode, (val) => {
   if (val === 'contain') expanded.value = true
   else expanded.value = false
 })
+
+defineExpose({ hasImage })
 </script>
 
 <style scoped>

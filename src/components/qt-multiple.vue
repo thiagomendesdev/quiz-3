@@ -15,7 +15,7 @@
                    @mouseenter="hoveredCard = qIdx"
                    @mouseleave="hoveredCard = null">
                 <div class="mb-1">
-                  <div v-if="question.image" class="flex flex-col gap-2">
+                  <div class="flex flex-col gap-3">
                     <ImageUploadPreview
                       v-model="question.image"
                       :max-width="true"
@@ -23,94 +23,10 @@
                       :display-mode="question.displayMode"
                       @update:displayMode="val => question.displayMode = val"
                       :ref="setImageUploadRef(qIdx)"
-                    />
-                    <div class="relative"
-                         :class="{'bg-secondary rounded-md': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
-                         @mouseenter="hoveredQuestion = qIdx"
-                         @mouseleave="hoveredQuestion = null">
-                      <Toolbar
-                        :show="hoveredQuestion === qIdx"
-                        class="z-20 left-float"
-                      >
-                        <Button
-                          size="icon-sm" variant="default"
-                          @click="removeQuestion(qIdx)"
-                          title="Remover questão"
-                          type="button"
-                        >
-                          <Trash :size="16" />
-                        </Button>
-                        <Button
-                          size="icon-sm" variant="default"
-                          @click="triggerImageUpload(qIdx)"
-                          title="Adicionar imagem à questão"
-                          type="button"
-                        >
-                          <ImagePlusIcon :size="16" />
-                        </Button>
-                        <Button size="icon-sm" variant="default"
-                          class="question-drag"
-                          title="Arraste para reordenar"
-                          type="button"
-                        >
-                          <GripVertical :size="16" />
-                        </Button>
-                      </Toolbar>
-                      <div class="flex items-start gap-1">
-                        <div>
-                          <span class="inline-block w-6 text-left text-lg font-medium text-primary select-none" style="padding-top: 1px;">{{ (qIdx + 1).toString().padStart(2, '0') }}</span>
-                        </div>
-                        <RteLarge
-                          v-model="question.text"
-                          placeholder="Digite aqui a questão"
-                          @focus="focusedQuestion = qIdx"
-                          @blur="focusedQuestion = null"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div v-else class="flex items-center gap-0 relative"
-                       :class="{'bg-secondary rounded-md': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
-                       @mouseenter="hoveredQuestion = qIdx"
-                       @mouseleave="hoveredQuestion = null">
-                    <Toolbar
-                      :show="hoveredQuestion === qIdx"
-                      class="z-20 left-float"
-                    >
-                      <Button
-                        size="icon-sm" variant="default"
-                        @click="removeQuestion(qIdx)"
-                        title="Remover questão"
-                        type="button"
-                      >
-                        <Trash :size="16" />
-                      </Button>
-                      <Button
-                        size="icon-sm" variant="default"
-                        @click="triggerImageUpload(qIdx)"
-                        title="Adicionar imagem à questão"
-                        type="button"
-                      >
-                        <ImagePlusIcon :size="16" />
-                      </Button>
-                      <Button size="icon-sm" variant="default"
-                        class="question-drag"
-                        title="Arraste para reordenar"
-                        type="button"
-                      >
-                        <GripVertical :size="16" />
-                      </Button>
-                    </Toolbar>
-                    <ImageUploadPreview
-                      v-model="question.image"
-                      :max-width="32"
-                      :max-height="32"
-                      :display-mode="question.displayMode"
-                      @update:displayMode="val => question.displayMode = val"
-                      :ref="setImageUploadRef(qIdx)"
                       hide-add-button
                     />
-                    <div class="flex-1 min-w-0 relative pl-2"
+                    <div class="relative px-2"
+                         :class="{'bg-secondary rounded-md': hoveredQuestion === qIdx || focusedQuestion === qIdx}"
                          @mouseenter="hoveredQuestion = qIdx"
                          @mouseleave="hoveredQuestion = null">
                       <Toolbar
@@ -207,7 +123,7 @@
                               @update:displayMode="val => alt.displayMode = val"
                               :ref="setAltImageUploadRef(qIdx, aIdx)"
                               hide-add-button
-                              :class="alt.image ? 'alt-image-preview' : ''"
+                              :class="altImageUploadRefs[qIdx]?.[aIdx]?.hasImage ? 'alt-image-preview' : ''"
                             />
                             <Circle :size="18" class="text-muted-foreground" />
                             <div class="flex-1 min-w-0">
