@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-[38px] rounded-md border-1px bg-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
-    <div ref="editor" class="min-h-[38px]"></div>
+  <div class="rte-inline">
+    <div ref="editor"></div>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'focus', 'blur'])
 
 const editor = ref(null)
 let quill = null
@@ -86,6 +86,10 @@ onMounted(() => {
     html = html.replace(/<li[^>]*>.*?<\/li>/gs, '')
     emit('update:modelValue', html)
   })
+
+  // Emitir eventos de focus/blur
+  quill.root.addEventListener('focus', () => emit('focus'))
+  quill.root.addEventListener('blur', () => emit('blur'))
 })
 
 // Watch for external value changes
@@ -104,37 +108,52 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
-.rich-text-editor {
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  overflow: hidden;
+.rte-inline,
+.rte-inline .ql-container,
+.rte-inline .ql-editor {
+  border: none !important;
+  background: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 1rem !important; /* text-base */
+  line-height: 1.5rem !important; /* leading-normal */
+  font-family: inherit !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  color: hsl(var(--foreground)) !important;
 }
 
-.rich-text-editor .ql-toolbar {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  background-color: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
+.rte-inline .ql-editor:focus,
+.rte-inline .ql-container:focus,
+.rte-inline .ql-editor:focus-within,
+.rte-inline .ql-container:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
-.rich-text-editor .ql-container {
-  border: none;
-  font-size: 1rem;
-  min-height: 100px;
-}
-
-.rich-text-editor .ql-editor {
-  padding: 1rem;
-}
-
-.rich-text-editor .ql-editor.ql-blank::before {
+.rte-inline .ql-editor.ql-blank::before {
   color: hsl(var(--muted-foreground)) !important;
   font-style: normal;
+  padding: 0 !important;
+  font-size: 1rem !important; /* text-base */
+  line-height: 1.5rem !important; /* leading-normal */
 }
 
-/* Garantir z-index da bubble do Quill */
-.ql-tooltip {
+.rte-inline .ql-tooltip {
   z-index: 10000 !important;
+  min-width: 320px !important;
+  max-width: 100vw !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  background-color: hsl(var(--foreground));
+}
+
+.rte-inline .ql-tooltip .ql-toolbar {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 0.25rem;
 }
 </style> 

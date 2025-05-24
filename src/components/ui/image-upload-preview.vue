@@ -1,7 +1,7 @@
 <template>
   <div :class="containerClass" :style="containerStyle">
     <button
-      v-if="!imageUrl"
+      v-if="!hideAddButton && !imageUrl"
       class="h-10 w-10 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
       type="button"
       @click="triggerFileInput"
@@ -19,31 +19,31 @@
       @change="onFileChange"
       :disabled="isLoading"
     />
-    <div v-if="imageUrl" class="relative flex-shrink-0 group" :style="imageBoxStyle">
+    <div v-if="imageUrl" 
+         class="relative flex-shrink-0"
+         :style="imageBoxStyle"
+         :class="{ 'alt-image-preview': isAlt && imageUrl }"
+    >
       <div 
-        :class="['rounded-md w-full h-full overflow-hidden', displayModeClass]" 
+        :class="['rounded-md w-full h-full overflow-hidden relative', displayModeClass, printBgClassName]"
         :style="{
           backgroundColor: dominantColor
         }"
       >
         <img
           :src="imageUrl"
-          class="w-full h-full"
-          :class="[displayModeClass, { 'cursor-pointer': !isPrintMode }]"
+          class="w-full h-full peer cursor-pointer"
+          :class="[displayModeClass]"
           :style="imgStyle"
-          @click="!isPrintMode && toggleExpand()"
+          @click="toggleExpand()"
           @load="onImageLoad"
           alt="Imagem da questão ou alternativa"
         />
-      </div>
-      <div v-if="!isPrintMode" class="absolute top-2 right-2 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button @click.stop="toggleExpand" class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center" type="button">
-          <ExpandIcon v-if="!isContain" :size="16" />
-          <ShrinkIcon v-else :size="16" />
-        </button>
-        <button @click.stop="removeImage" class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors flex items-center justify-center" type="button">
-          <TrashIcon :size="16" />
-        </button>
+        <div class="absolute top-2 right-2 flex gap-2 z-10 opacity-0 peer-hover:opacity-100 hover:opacity-100 transition-opacity btn-remove">
+          <Button @click.stop="removeImage" size="icon-sm" variant="default" type="button">
+            <TrashIcon :size="16" />
+          </Button>
+        </div>
       </div>
     </div>
   </div>
@@ -54,13 +54,14 @@ import { ref, computed, watch } from 'vue'
 import { ImagePlus as ImagePlusIcon, Maximize2 as ExpandIcon, Minimize2 as ShrinkIcon, Trash as TrashIcon, Loader2 as LoaderIcon } from 'lucide-vue-next'
 import { uploadToImageKit } from '@/lib/imagekit-upload'
 import * as FastAverageColor from 'fast-average-color'
+import { Button } from './button'
 
 const props = defineProps({
   modelValue: String,
   maxWidth: { type: [Number, Boolean], default: false },
   maxHeight: { type: [Number, Boolean], default: false },
   displayMode: { type: String, default: '' }, // 'cover' ou 'contain'
-  isPrintMode: { type: Boolean, default: false }
+  hideAddButton: { type: Boolean, default: false }
 })
 const emit = defineEmits(['update:modelValue', 'update:displayMode'])
 
@@ -68,8 +69,10 @@ const fileInput = ref(null)
 const isLoading = ref(false)
 const expanded = ref(false)
 const dominantColor = ref('#f3f3f3')
+const localPreviewUrl = ref(null)
+const printBgClassName = ref('')
 
-const imageUrl = computed(() => props.modelValue)
+const imageUrl = computed(() => localPreviewUrl.value || props.modelValue)
 
 const isAlt = computed(() => props.maxWidth === 150 && props.maxHeight === 150)
 
@@ -111,6 +114,28 @@ const imgStyle = computed(() => {
   return style
 })
 
+const hasImage = computed(() => !!(localPreviewUrl.value || props.modelValue))
+
+function injectPrintBgColor(hex) {
+  if (!hex) return '';
+  const className = `print-bg-${hex.replace('#', '')}`;
+  if (!document.getElementById(className)) {
+    const style = document.createElement('style');
+    style.id = className;
+    style.innerHTML = `
+      @media print {
+        .${className} {
+          background-color: ${hex} !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  return className;
+}
+
 async function calculateDominantColor(imgUrl) {
   if (!imgUrl) return
   try {
@@ -131,9 +156,12 @@ async function calculateDominantColor(imgUrl) {
     })
     console.log('Dominant color calculated:', color)
     dominantColor.value = color.hex
+    // Injeta a classe fixa para impressão
+    printBgClassName.value = injectPrintBgColor(color.hex)
   } catch (error) {
     console.error('Error calculating dominant color:', error)
     dominantColor.value = '#f3f3f3'
+    printBgClassName.value = ''
   }
 }
 
@@ -151,10 +179,20 @@ function triggerFileInput() {
 async function onFileChange(e) {
   const file = e.target.files[0]
   if (!file) return
+  // Cria preview local
+  if (localPreviewUrl.value) {
+    URL.revokeObjectURL(localPreviewUrl.value)
+  }
+  localPreviewUrl.value = URL.createObjectURL(file)
   isLoading.value = true
   try {
     const url = await uploadToImageKit(file)
     emit('update:modelValue', url)
+    // Limpa preview local após upload
+    if (localPreviewUrl.value) {
+      URL.revokeObjectURL(localPreviewUrl.value)
+      localPreviewUrl.value = null
+    }
   } finally {
     isLoading.value = false
   }
@@ -169,12 +207,26 @@ function removeImage() {
   emit('update:modelValue', '')
   emit('update:displayMode', 'cover')
   dominantColor.value = '#f3f3f3'
+  if (fileInput.value) fileInput.value.value = ''
+  if (localPreviewUrl.value) {
+    URL.revokeObjectURL(localPreviewUrl.value)
+    localPreviewUrl.value = null
+  }
 }
 
 watch(() => props.displayMode, (val) => {
   if (val === 'contain') expanded.value = true
   else expanded.value = false
 })
+
+const printBgClass = computed(() => {
+  if (isContain.value && dominantColor.value) {
+    return printBgClassName.value;
+  }
+  return '';
+});
+
+defineExpose({ hasImage })
 </script>
 
 <style scoped>
@@ -192,14 +244,9 @@ img {
 }
 
 @media print {
-  .object-contain {
-    background-color: var(--print-bg-color) !important;
-  }
+  /* fundo fixo removido */
 }
-
-/* Garantir que as bordas arredondadas sejam mantidas em ambos os modos */
-.rounded-md {
-  border-radius: 0.5rem;
-  overflow: hidden;
+@media screen {
+  /* fundo fixo removido */
 }
 </style> 

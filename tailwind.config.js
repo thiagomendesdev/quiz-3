@@ -66,4 +66,10 @@ module.exports = {
   	}
   },
   plugins: [require("tailwindcss-animate")],
+  safelist: [
+    'gap-[6px]',
+    'gap-1',
+    'gap-2',
+    'gap-0',
+  ],
 } 
