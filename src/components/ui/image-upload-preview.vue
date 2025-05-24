@@ -25,7 +25,7 @@
          :class="{ 'alt-image-preview': isAlt && imageUrl }"
     >
       <div 
-        :class="['rounded-md w-full h-full overflow-hidden relative', displayModeClass]" 
+        :class="['rounded-md w-full h-full overflow-hidden relative', displayModeClass, printBgClassName]"
         :style="{
           backgroundColor: dominantColor
         }"
@@ -70,6 +70,7 @@ const isLoading = ref(false)
 const expanded = ref(false)
 const dominantColor = ref('#f3f3f3')
 const localPreviewUrl = ref(null)
+const printBgClassName = ref('')
 
 const imageUrl = computed(() => localPreviewUrl.value || props.modelValue)
 
@@ -115,6 +116,26 @@ const imgStyle = computed(() => {
 
 const hasImage = computed(() => !!(localPreviewUrl.value || props.modelValue))
 
+function injectPrintBgColor(hex) {
+  if (!hex) return '';
+  const className = `print-bg-${hex.replace('#', '')}`;
+  if (!document.getElementById(className)) {
+    const style = document.createElement('style');
+    style.id = className;
+    style.innerHTML = `
+      @media print {
+        .${className} {
+          background-color: ${hex} !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  return className;
+}
+
 async function calculateDominantColor(imgUrl) {
   if (!imgUrl) return
   try {
@@ -135,9 +156,12 @@ async function calculateDominantColor(imgUrl) {
     })
     console.log('Dominant color calculated:', color)
     dominantColor.value = color.hex
+    // Injeta a classe fixa para impressão
+    printBgClassName.value = injectPrintBgColor(color.hex)
   } catch (error) {
     console.error('Error calculating dominant color:', error)
     dominantColor.value = '#f3f3f3'
+    printBgClassName.value = ''
   }
 }
 
@@ -195,6 +219,13 @@ watch(() => props.displayMode, (val) => {
   else expanded.value = false
 })
 
+const printBgClass = computed(() => {
+  if (isContain.value && dominantColor.value) {
+    return printBgClassName.value;
+  }
+  return '';
+});
+
 defineExpose({ hasImage })
 </script>
 
@@ -213,9 +244,9 @@ img {
 }
 
 @media print {
-  .object-contain {
-    background-color: var(--print-bg-color) !important;
-  }
+  /* fundo fixo removido */
 }
-
+@media screen {
+  /* fundo fixo removido */
+}
 </style> 
